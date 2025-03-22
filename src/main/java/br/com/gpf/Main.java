@@ -1,7 +1,11 @@
 package br.com.gpf;
 
+import br.com.gpf.view.GpfScreen;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        GpfScreen gpfScreen = GpfScreen.getInstance();
+        gpfScreen.start();
+
     }
 }
