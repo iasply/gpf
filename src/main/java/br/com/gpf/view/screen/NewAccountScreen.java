@@ -1,20 +1,18 @@
-package br.com.gpf.view;
+package br.com.gpf.view.screen;
 
 import br.com.gpf.Util;
 import br.com.gpf.service.Controller;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
-import br.com.gpf.view.screen.DefaultTemplateScreen;
-import br.com.gpf.view.screen.MessageDialogEnum;
-import br.com.gpf.view.screen.Screen;
-import br.com.gpf.view.screen.ScreenEnum;
+import br.com.gpf.view.DefaultScreenException;
+import br.com.gpf.view.GpfScreen;
+import br.com.gpf.view.LoadData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
-public class NewAccountScreen extends DefaultTemplateScreen implements Screen {
+public class NewAccountScreen extends DefaultTemplateScreen {
 
     private final JTextField userName;
     private final JPasswordField password;
@@ -51,14 +49,14 @@ public class NewAccountScreen extends DefaultTemplateScreen implements Screen {
             try {
                 onSave();
             } catch (DefaultScreenException ex) {
-                MessageDialogEnum.ERROR.showMsg(ex.getMessage());
+                MessageDialogEnum.ERROR.showMsg(ex.getMessage(),null);
                 return;
             }
 
             ResponseData responseData = Controller.getInstance().getAccountService().createAccount(userName.getText(), new String(password.getPassword()));
-            if (responseData.getValue() != RequestStatusEnum.SUCESS) {
-                String msg = DataEnum.decode(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
-                MessageDialogEnum.ERROR.showMsg(msg);
+            if (responseData.getValue() != RequestStatusEnum.SUCCESS) {
+                String msg = DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
+                MessageDialogEnum.ERROR.showMsg(msg,null);
 
                 SwingUtilities.invokeLater(() -> {
                     GpfScreen instance = GpfScreen.getInstance();
@@ -67,7 +65,7 @@ public class NewAccountScreen extends DefaultTemplateScreen implements Screen {
                 return;
             }
 
-            MessageDialogEnum.SUCCESS.showMsg("USER " + userName.getText() + " CREATED");
+            MessageDialogEnum.SUCCESS.showMsg("USER " + userName.getText() + " CREATED",null);
 
             SwingUtilities.invokeLater(() -> {
                 GpfScreen instance = GpfScreen.getInstance();
@@ -77,13 +75,10 @@ public class NewAccountScreen extends DefaultTemplateScreen implements Screen {
 
         });
 
-        back.addActionListener(e -> {
-
-            SwingUtilities.invokeLater(() -> {
-                GpfScreen instance = GpfScreen.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
-            });
-        });
+        back.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreen instance = GpfScreen.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
+        }));
 
     }
 
@@ -102,6 +97,11 @@ public class NewAccountScreen extends DefaultTemplateScreen implements Screen {
         }
 
 
+    }
+
+    @Override
+    public String getTittle() {
+        return ScreenEnum.NEW_ACCOUNT.getTitle();
     }
 
 

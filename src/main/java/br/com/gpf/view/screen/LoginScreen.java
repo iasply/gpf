@@ -4,14 +4,14 @@ import br.com.gpf.service.Controller;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
+import br.com.gpf.view.DefaultScreenException;
 import br.com.gpf.view.GpfScreen;
 import br.com.gpf.view.LoadData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
-public class LoginScreen extends DefaultTemplateScreen implements Screen {
+public class LoginScreen extends DefaultTemplateScreen {
 
 
     private final JTextField userName;
@@ -42,10 +42,10 @@ public class LoginScreen extends DefaultTemplateScreen implements Screen {
         loginButton.addActionListener(e -> {
             ResponseData responseData = Controller.getInstance().getAccountService().login(userName.getText(), new String(password.getPassword()));
 
-            if (responseData.getValue() != RequestStatusEnum.SUCESS) {
+            if (responseData.getValue() != RequestStatusEnum.SUCCESS) {
 
-                String msg = DataEnum.decode(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
-                MessageDialogEnum.ERROR.showMsg(msg);
+                String msg = DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
+                MessageDialogEnum.ERROR.showMsg(msg,null);
 
                 SwingUtilities.invokeLater(() -> {
                     GpfScreen instance = GpfScreen.getInstance();
@@ -55,29 +55,28 @@ public class LoginScreen extends DefaultTemplateScreen implements Screen {
             }
 
 
-            GpfScreen instance = GpfScreen.getInstance();
-            MessageDialogEnum.SUCCESS.showMsg("BRABO CARALHO É O PAI");
-//todo
-//            SwingUtilities.invokeLater(() -> {
-//                GpfScreen instance = GpfScreen.getInstance();
-//                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
-//            });
-
-        });
-
-
-        newAccount.addActionListener(e -> {
             SwingUtilities.invokeLater(() -> {
                 GpfScreen instance = GpfScreen.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
+                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
             });
 
         });
+
+
+        newAccount.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreen instance = GpfScreen.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
+        }));
     }
 
     @Override
-    public void onSave() {
+    public void onSave() throws DefaultScreenException {
+        // :)
+    }
 
+    @Override
+    public String getTittle() {
+        return ScreenEnum.LOGIN.getTitle();
     }
 
     @Override

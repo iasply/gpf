@@ -1,12 +1,9 @@
 package br.com.gpf.view;
 
-import br.com.gpf.view.screen.LoginScreen;
-import br.com.gpf.view.screen.Screen;
-import br.com.gpf.view.screen.ScreenEnum;
+import br.com.gpf.view.screen.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
 
 public class GpfScreen extends JFrame {
     private static GpfScreen instance;
@@ -83,7 +80,12 @@ public class GpfScreen extends JFrame {
            case ScreenEnum.NEW_ACCOUNT ->{
                return new NewAccountScreen();
            }
-
+           case ScreenEnum.HOME -> {
+               return new HomeScreen();
+           }
+           case ScreenEnum.TRANSACTION_TYPES -> {
+               return new TransactionTypesScreen();
+           }
         }
         return null;
     }

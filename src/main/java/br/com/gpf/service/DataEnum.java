@@ -1,12 +1,18 @@
 package br.com.gpf.service;
 
+import br.com.gpf.repository.model.TransactionTypesModel;
+
+import java.util.List;
+import java.util.Objects;
+
 public enum DataEnum {
     NULL,
-    ERROR_MSG;
+    ERROR_MSG,
+    USER_TYPES;
 
 
 
-    public static String decode(DataEnum dataEnum, Object object){
+    public static String decodeString(DataEnum dataEnum, Object object){
         switch (dataEnum){
             case NULL, ERROR_MSG -> {
                 return (String) object;
@@ -15,4 +21,10 @@ public enum DataEnum {
         }
     }
 
+    public static List<TransactionTypesModel> decodeTransactionTypes(DataEnum dataEnum, Object object){
+        if (Objects.requireNonNull(dataEnum) == DataEnum.USER_TYPES) {
+            return (List<TransactionTypesModel>) object;
+        }
+        throw new RuntimeException("invalid data parse");
+    }
 }
