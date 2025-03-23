@@ -117,9 +117,8 @@ public class HomeScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getBottomPanel() {
-        super.bottomPanel.setLayout(new BorderLayout());
 
-        super.bottomPanel.add(exitAccountButton, BorderLayout.EAST);
+        super.bottomPanel.add(exitAccountButton );
 
         return super.bottomPanel;
     }

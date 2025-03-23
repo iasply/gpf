@@ -1,21 +1,23 @@
 package br.com.gpf.repository;
 
-import br.com.gpf.repository.dao.TransactionTypesDao;
-import br.com.gpf.repository.dao.TransactionTypesDaoImpl;
-import br.com.gpf.repository.dao.UserDao;
-import br.com.gpf.repository.dao.UserDaoImpl;
+import br.com.gpf.repository.dao.*;
+import br.com.gpf.service.TransactionService;
+import br.com.gpf.service.TransactionServiceImpl;
 
 public class Repository {
-    private  static Repository instance;
+    private static Repository instance;
     private final UserDao userDao;
     private final TransactionTypesDao transactionTypesDao;
+    private final TransactionDao transactionDao;
+
     private Repository() {
-        userDao =new UserDaoImpl();
-        transactionTypesDao = new TransactionTypesDaoImpl();
+        this.userDao = new UserDaoImpl();
+        this.transactionTypesDao = new TransactionTypesDaoImpl();
+        this.transactionDao = new TransactionDaoImpl();
     }
 
-    public static Repository getInstance(){
-        if(instance == null){
+    public static Repository getInstance() {
+        if (instance == null) {
             instance = new Repository();
         }
         return instance;
@@ -27,5 +29,9 @@ public class Repository {
 
     public TransactionTypesDao getTransactionTypesDao() {
         return transactionTypesDao;
+    }
+
+    public TransactionDao getTransactionDao() {
+        return transactionDao;
     }
 }

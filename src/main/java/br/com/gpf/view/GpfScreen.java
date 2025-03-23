@@ -86,6 +86,9 @@ public class GpfScreen extends JFrame {
            case ScreenEnum.TRANSACTION_TYPES -> {
                return new TransactionTypesScreen();
            }
+           case ScreenEnum.ADD_TRANSACTION -> {
+               return new TransactionAddScreen();
+           }
         }
         return null;
     }

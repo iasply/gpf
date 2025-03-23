@@ -10,11 +10,13 @@ public class Controller {
     private static Controller instance = null;
     private AccountService accountService;
     private TransactionTypeService transactionTypeService;
+    private TransactionService transactionService;
     private Session session;
     private Controller() {
         this.session = null;
         this.accountService = new  AccountServiceImpl();
         this.transactionTypeService = new TransactionTypeServiceImpl();
+        this.transactionService = new TransactionServiceImpl();
 
         accountService.createAccount("i","i");
     }
@@ -40,5 +42,9 @@ public class Controller {
 
     public TransactionTypeService getTransactionTypeService() {
         return transactionTypeService;
+    }
+
+    public TransactionService getTransactionService() {
+        return transactionService;
     }
 }

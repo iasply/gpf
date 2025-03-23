@@ -130,9 +130,8 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getBottomPanel() {
-        super.bottomPanel.setLayout(new BorderLayout());
 
-        super.bottomPanel.add(super.defaultHomeButton(), BorderLayout.EAST);
+        super.bottomPanel.add(super.defaultHomeButton());
 
         return super.bottomPanel;
 
@@ -183,7 +182,7 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
 
         }
 
-        MessageDialogEnum.ERROR.showMsg("Failed to load transaction types: " + responseData.getMapData().get(DataEnum.ERROR_MSG), null);
+        MessageDialogEnum.ERROR.showMsg("Failed to load transaction types: " + DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG)), null);
         SwingUtilities.invokeLater(() -> {
             GpfScreen instance = GpfScreen.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);

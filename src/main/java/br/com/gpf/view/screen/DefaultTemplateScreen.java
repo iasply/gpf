@@ -43,6 +43,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     private void defaultBottomPanel() {
         bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.blue);
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
     }
 
     @Override

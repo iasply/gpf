@@ -8,7 +8,7 @@ import java.util.Objects;
 public enum DataEnum {
     NULL,
     ERROR_MSG,
-    USER_TYPES;
+    USER_TYPES, USER_TRANSACTIONS;
 
 
 

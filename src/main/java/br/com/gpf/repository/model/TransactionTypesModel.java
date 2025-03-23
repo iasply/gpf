@@ -42,4 +42,9 @@ public class TransactionTypesModel {
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
+
+    @Override
+    public String toString() {
+        return desc;
+    }
 }
