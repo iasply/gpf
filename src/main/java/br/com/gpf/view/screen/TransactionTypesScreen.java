@@ -30,7 +30,6 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
     private static final String LABEL_CREATE_TYPE = "Create Type";
     private static final String LABEL_NEW_TYPE = "New Type:";
 
-    private static final String[] columnNames = {"ID", "TYPE", "EDIT", "DELETE"};
 
 
     public TransactionTypesScreen() {

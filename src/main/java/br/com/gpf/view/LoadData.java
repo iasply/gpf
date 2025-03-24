@@ -13,4 +13,8 @@ public class LoadData {
         this.mapData = new HashMap<>();
 
     }
+
+    public Map<DataEnum, Object> getMapData() {
+        return mapData;
+    }
 }

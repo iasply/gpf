@@ -5,6 +5,8 @@ import br.com.gpf.service.impl.AccountServiceImpl;
 import br.com.gpf.service.impl.TransactionTypeService;
 import br.com.gpf.service.impl.TransactionTypeServiceImpl;
 
+import java.util.Date;
+
 public class Controller {
 
     private static Controller instance = null;
@@ -19,6 +21,11 @@ public class Controller {
         this.transactionService = new TransactionServiceImpl();
 
         accountService.createAccount("i","i");
+        transactionService.createTransaction(1200.0,1,1,new Date(),"blabla",0);
+        transactionService.createTransaction(120.0,0,1,new Date(),"blabla",0);
+        transactionService.createTransaction(100.0,1,0,new Date(),"blabla",0);
+        transactionService.createTransaction(1200.0,0,0,new Date(),"blabla",0);
+        transactionService.createTransaction(1200.0,1,0,new Date(),"blabla",0);
     }
 
     public static Controller getInstance() {

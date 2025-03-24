@@ -14,6 +14,8 @@ import java.awt.*;
 import java.util.Date;
 import java.util.List;
 
+import static br.com.gpf.view.ConstValues.*;
+
 public class TransactionAddScreen extends DefaultTemplateScreen {
 
     private static final String LABEL_CREATE_TRANSACTION = "Create Transaction";
@@ -21,10 +23,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
     private static final String LABEL_VALUE = "Value:";
     private static final String LABEL_DATE = "Date:";
     private static final String LABEL_DESCRIPTION = "Description:";
-    private static final String LABEL_INCOME = "Income";
-    private static final String LABEL_EXPENSE = "Expense";
-    private static final Integer CONST_INCOME = 1;
-    private static final Integer CONST_EXPENSE = 0;
+
     private static final String BUTTON_LABEL_SAVE = "Save";
     private static final String BUTTON_LABEL_TRANSACTION_HISTORY = "TRANSACTION HISTORY";
     private static final String BUTTON_LABEL_REPORTS = "REPORTS";
@@ -67,7 +66,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
 
 
         this.dateSpinner = new JSpinner(new SpinnerDateModel(new Date(), null, null, java.util.Calendar.DAY_OF_MONTH));
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd");
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, DATE_FORMAT);
         dateSpinner.setEditor(editor);
 
         this.saveButton = new JButton(BUTTON_LABEL_SAVE);
@@ -99,7 +98,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
                 onSave();
                 Integer transactionCategory = incomeRadioButton.isSelected() ? CONST_INCOME : CONST_EXPENSE;
                 String valueText = valueField.getText();
-                String descriptionText = descriptionField.getText();
+                String descriptionText = descriptionField.getText().trim();
                 Date selectedDate = (Date) dateSpinner.getValue();
                 TransactionTypesModel transactionType = (TransactionTypesModel) typeComboBox.getSelectedItem();
                 Double value = Double.parseDouble(valueText);
