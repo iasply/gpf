@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class HomeScreen extends DefaultTemplateScreen {
 
-    private final JLabel accountName;
     private final JButton addTransactionButton;
     private final JButton transactionHistoryButton;
     private final JButton transactionTypesButton;
@@ -25,7 +24,7 @@ public class HomeScreen extends DefaultTemplateScreen {
 
 
     public HomeScreen() {
-        this.accountName = new JLabel();
+
         this.addTransactionButton = new JButton(BUTTON_TEXT_ADD_TRANSACTION);
         this.transactionHistoryButton = new JButton(BUTTON_TEXT_TRANSACTION_HISTORY);
         this.transactionTypesButton = new JButton(BUTTON_TEXT_TRANSACTION_CATEGORIES);
@@ -36,7 +35,7 @@ public class HomeScreen extends DefaultTemplateScreen {
 
     @Override
     public void onload(LoadData loadData) {
-        accountName.setText(Controller.getInstance().getSession().userName());
+
 
         exitAccountButton.addActionListener(e -> {
 
@@ -80,9 +79,8 @@ public class HomeScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getTopPanel() {
-        super.topPanel.setLayout(new BorderLayout());
 
-        super.topPanel.add(accountName, BorderLayout.CENTER);
+        super.topPanel.add(userNameLabel());
 
         return super.topPanel;
     }
@@ -118,7 +116,7 @@ public class HomeScreen extends DefaultTemplateScreen {
     @Override
     public JPanel getBottomPanel() {
 
-        super.bottomPanel.add(exitAccountButton );
+        super.bottomPanel.add(exitAccountButton);
 
         return super.bottomPanel;
     }

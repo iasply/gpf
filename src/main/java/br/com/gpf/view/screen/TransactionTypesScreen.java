@@ -78,8 +78,7 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getTopPanel() {
-        super.topPanel.setLayout(new BorderLayout());
-        super.topPanel.add(accountNameLabel, BorderLayout.CENTER);
+        super.topPanel.add(userNameLabel());
         return super.topPanel;
     }
 

@@ -27,6 +27,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
     private static final String LABEL_FILTER = "Filter by Type:";
     private static final String LABEL_SEARCH = "Search:";
     private static final String LABEL_CLEAR_SELECTION = "Clear Selection";
+    private StringBuilder filterString ;
 
     private JTable table;
     private final JComboBox<String> filterComboBox;
@@ -46,7 +47,8 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
         columnNames.add(TYPE.getName());
         columnNames.add(DESCRIPTION.getName());
         columnNames.add(DATE.getName());
-
+        filterString= new StringBuilder();
+        filterString.append("/ FILTROS?");
         this.filterComboBox = new JComboBox<>(columnNames);
     }
 
@@ -97,6 +99,10 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
             if (loadData != null) {
                 String classificationFilter = DataEnum.decodeString(DataEnum.FILTER_CLASSIFICATION, loadData.getMapData().get(DataEnum.FILTER_CLASSIFICATION));
                 if (classificationFilter != null) {
+                    filterString.append(" ");
+                    filterString.append(CLASSIFICATION.getName());
+                    filterString.append("=");
+                    filterString.append(classificationFilter );
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> {
                                 Integer transactionClassification = transaction.getTransactionClassification();
@@ -115,13 +121,21 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
 
                 String valueFilter = DataEnum.decodeString(DataEnum.FILTER_VALUE, loadData.getMapData().get(DataEnum.FILTER_VALUE));
                 if (valueFilter != null) {
+                    filterString.append(" ");
+                    filterString.append(VALUE.getName());
+                    filterString.append("=");
+                    filterString.append(valueFilter );
                     transactionModels = transactionModels.stream()
-                            .filter(transaction -> transaction.getValue().toString().contains(valueFilter))
-                            .toList();
+                            .filter(transaction -> transaction.getValue().toString().equals(valueFilter))
+                            .collect(Collectors.toList());
                 }
 
                 String typeFilter = DataEnum.decodeString(DataEnum.FILTER_TYPE, loadData.getMapData().get(DataEnum.FILTER_TYPE));
                 if (typeFilter != null) {
+                    filterString.append(" ");
+                    filterString.append(TYPE.getName());
+                    filterString.append("=");
+                    filterString.append(typeFilter);
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> {
                                 TransactionTypesModel typeModel = transactionTypesModels.stream()
@@ -130,24 +144,32 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                                         .orElse(null);
                                 return typeModel != null && typeModel.getDesc().equals(typeFilter);
                             })
-                            .toList();
+                            .collect(Collectors.toList());
                 }
 
                 String descriptionFilter = DataEnum.decodeString(DataEnum.FILTER_DESCRIPTION, loadData.getMapData().get(DataEnum.FILTER_DESCRIPTION));
                 if (descriptionFilter != null) {
+                    filterString.append(" ");
+                    filterString.append(DESCRIPTION.getName());
+                    filterString.append("=");
+                    filterString.append(descriptionFilter);
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> transaction.getDescriptionText() != null && transaction.getDescriptionText().contains(descriptionFilter))
-                            .toList();
+                            .collect(Collectors.toList());
                 }
 
                 String dateFilter = DataEnum.decodeString(DataEnum.FILTER_DATE, loadData.getMapData().get(DataEnum.FILTER_DATE));
                 if (dateFilter != null) {
+                    filterString.append(" ");
+                    filterString.append(DATE.getName());
+                    filterString.append("=");
+                    filterString.append(dateFilter);
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
                                 return dateFormat.format(transaction.getDate()).equals(dateFilter);
                             })
-                            .toList();
+                            .collect(Collectors.toList());
                 }
             }
 
@@ -182,6 +204,12 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
         }
     }
 
+    @Override
+    public  JPanel getTopPanel(){
+        super.topPanel.add(userNameLabel());
+        super.topPanel.add(new JLabel(filterString.toString()));
+        return super.topPanel;
+    }
 
     @Override
     public JPanel getMidPanel() {

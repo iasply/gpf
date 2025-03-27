@@ -165,6 +165,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getTopPanel() {
+        super.topPanel.add(userNameLabel());
         return this.topPanel;
     }
 

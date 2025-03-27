@@ -13,16 +13,15 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JPanel bottomPanel;
     private static final String BUTTON_TEXT_HOME = "HOME";
 
+
     protected DefaultTemplateScreen() {
         defaultTopPanel();
         defaultMidPanel();
         defaultBottomPanel();
-
-
     }
 
 
-    protected JButton  defaultHomeButton(){
+    protected JButton defaultHomeButton() {
         JButton homeButton = new JButton(BUTTON_TEXT_HOME);
         homeButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
             GpfScreen instance = GpfScreen.getInstance();
@@ -30,14 +29,22 @@ public abstract class DefaultTemplateScreen implements Screen {
         }));
         return homeButton;
     }
+    protected JLabel userNameLabel(){
+        JLabel accountName = new JLabel();
+        accountName.setText("/ USUARIO "+Controller.getInstance().getSession().userName());
+        return accountName;
+    }
+
     private void defaultTopPanel() {
         topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        topPanel.add(new JLabel(getTittle()));
         //topPanel.setBackground(Color.red);
     }
 
     private void defaultMidPanel() {
         midPanel = new JPanel();
-       // midPanel.setBackground(Color.GREEN);
+        // midPanel.setBackground(Color.GREEN);
     }
 
     private void defaultBottomPanel() {
@@ -48,7 +55,7 @@ public abstract class DefaultTemplateScreen implements Screen {
 
     @Override
     public String getTittle() {
-        return null;
+        return "";
     }
 
     @Override
