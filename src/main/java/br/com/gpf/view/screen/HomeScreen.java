@@ -1,9 +1,8 @@
-package br.com.gpf.view;
+package br.com.gpf.view.screen;
 
 import br.com.gpf.service.Controller;
-import br.com.gpf.view.screen.DefaultTemplateScreen;
-import br.com.gpf.view.screen.Screen;
-import br.com.gpf.view.screen.ScreenEnum;
+import br.com.gpf.view.GpfScreenManager;
+import br.com.gpf.view.LoadData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,26 +40,26 @@ public class HomeScreen extends DefaultTemplateScreen {
 
             Controller.getInstance().setSession(null);
             SwingUtilities.invokeLater(() -> {
-                GpfScreen instance = GpfScreen.getInstance();
+                GpfScreenManager instance = GpfScreenManager.getInstance();
                 instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
             });
 
         });
 
         addTransactionButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
         }));
         transactionTypesButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_TYPES), null);
         }));
         transactionHistoryButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
         }));
         reportsButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.REPORTS), null);
         }));
 

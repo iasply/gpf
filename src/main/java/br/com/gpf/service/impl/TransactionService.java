@@ -1,4 +1,6 @@
-package br.com.gpf.service;
+package br.com.gpf.service.impl;
+
+import br.com.gpf.service.ResponseData;
 
 import java.util.Date;
 

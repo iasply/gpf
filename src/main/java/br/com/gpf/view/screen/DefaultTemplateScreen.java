@@ -1,11 +1,10 @@
 package br.com.gpf.view.screen;
 
 import br.com.gpf.service.Controller;
-import br.com.gpf.view.GpfScreen;
+import br.com.gpf.view.GpfScreenManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.ref.PhantomReference;
 
 public abstract class DefaultTemplateScreen implements Screen {
     protected JPanel topPanel;
@@ -24,7 +23,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultHomeButton() {
         JButton homeButton = new JButton(BUTTON_TEXT_HOME);
         homeButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
         }));
         return homeButton;

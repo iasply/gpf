@@ -6,10 +6,7 @@ import br.com.gpf.service.Controller;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
-import br.com.gpf.view.ConstValues;
-import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreen;
-import br.com.gpf.view.LoadData;
+import br.com.gpf.view.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -68,7 +65,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                 loadData1.getMapData().put(FilterColumnEnum.toEnum(selectedFilter).getDataEnum(), searchText);
 
                 SwingUtilities.invokeLater(() -> {
-                    GpfScreen instance = GpfScreen.getInstance();
+                    GpfScreenManager instance = GpfScreenManager.getInstance();
                     instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), loadData1);
                 });
 
@@ -80,7 +77,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
 
 
         clearSelectionButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
         }));
 

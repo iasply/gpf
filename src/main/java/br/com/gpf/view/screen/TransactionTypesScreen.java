@@ -6,8 +6,9 @@ import br.com.gpf.service.ResponseData;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreen;
+import br.com.gpf.view.GpfScreenManager;
 import br.com.gpf.view.LoadData;
+import br.com.gpf.view.MessageDialogEnum;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -182,7 +183,7 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
 
         MessageDialogEnum.ERROR.showMsg("Failed to load transaction types: " + DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG)), null);
         SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
         });
     }
@@ -258,7 +259,7 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
 
     private static void reload() {
         SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_TYPES), null);
         });
     }

@@ -1,4 +1,4 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view;
 
 import javax.swing.*;
 import java.awt.*;

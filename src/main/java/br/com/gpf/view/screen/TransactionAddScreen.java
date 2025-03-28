@@ -6,8 +6,9 @@ import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreen;
+import br.com.gpf.view.GpfScreenManager;
 import br.com.gpf.view.LoadData;
+import br.com.gpf.view.MessageDialogEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,7 +83,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
         if (userTypesResponseData.getValue() != RequestStatusEnum.SUCCESS) {
             MessageDialogEnum.ERROR.showMsg(DataEnum.decodeString(DataEnum.ERROR_MSG, userTypesResponseData.getMapData().get(DataEnum.ERROR_MSG)), null);
             SwingUtilities.invokeLater(() -> {
-                GpfScreen instance = GpfScreen.getInstance();
+                GpfScreenManager instance = GpfScreenManager.getInstance();
                 instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
             });
             return;
@@ -109,7 +110,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
                     MessageDialogEnum.SUCCESS.showMsg("Transaction saved successfully!", null);
 
                     SwingUtilities.invokeLater(() -> {
-                        GpfScreen instance = GpfScreen.getInstance();
+                        GpfScreenManager instance = GpfScreenManager.getInstance();
                         instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
                     });
                     return;
@@ -127,14 +128,14 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
         transactionHistoryButton.addActionListener(e -> {
 
             SwingUtilities.invokeLater(() -> {
-                GpfScreen instance = GpfScreen.getInstance();
+                GpfScreenManager instance = GpfScreenManager.getInstance();
                 instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
             });
         });
 
         reportsButton.addActionListener(e ->{
             SwingUtilities.invokeLater(() -> {
-                GpfScreen instance = GpfScreen.getInstance();
+                GpfScreenManager instance = GpfScreenManager.getInstance();
                 instance.changeScreen(instance.loadScreenPanel(ScreenEnum.REPORTS), null);
             });
         });

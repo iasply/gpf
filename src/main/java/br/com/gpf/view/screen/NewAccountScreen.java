@@ -6,8 +6,9 @@ import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreen;
+import br.com.gpf.view.GpfScreenManager;
 import br.com.gpf.view.LoadData;
+import br.com.gpf.view.MessageDialogEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -59,7 +60,7 @@ public class NewAccountScreen extends DefaultTemplateScreen {
                 MessageDialogEnum.ERROR.showMsg(msg,null);
 
                 SwingUtilities.invokeLater(() -> {
-                    GpfScreen instance = GpfScreen.getInstance();
+                    GpfScreenManager instance = GpfScreenManager.getInstance();
                     instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
                 });
                 return;
@@ -68,7 +69,7 @@ public class NewAccountScreen extends DefaultTemplateScreen {
             MessageDialogEnum.SUCCESS.showMsg("USER " + userName.getText() + " CREATED",null);
 
             SwingUtilities.invokeLater(() -> {
-                GpfScreen instance = GpfScreen.getInstance();
+                GpfScreenManager instance = GpfScreenManager.getInstance();
                 instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
             });
 
@@ -76,7 +77,7 @@ public class NewAccountScreen extends DefaultTemplateScreen {
         });
 
         back.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreen instance = GpfScreen.getInstance();
+            GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
         }));
 

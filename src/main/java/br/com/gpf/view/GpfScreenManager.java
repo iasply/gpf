@@ -5,8 +5,8 @@ import br.com.gpf.view.screen.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class GpfScreen extends JFrame {
-    private static GpfScreen instance;
+public class GpfScreenManager extends JFrame {
+    private static GpfScreenManager instance;
 
     private static final String FRAME_TITLE = "Gerenciador Pessoal de Finanças";
     private static final Integer FRAME_WIDTH = 800;
@@ -19,7 +19,7 @@ public class GpfScreen extends JFrame {
     private GridBagConstraints gbc;
 
 
-    private GpfScreen() {
+    private GpfScreenManager() {
         setTitle(FRAME_TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -29,9 +29,9 @@ public class GpfScreen extends JFrame {
         setResizable(false);
     }
 
-    public static GpfScreen getInstance() {
+    public static GpfScreenManager getInstance() {
         if (instance == null) {
-            instance = new GpfScreen();
+            instance = new GpfScreenManager();
         }
         return instance;
     }

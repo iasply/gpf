@@ -1,8 +1,6 @@
 package br.com.gpf.repository;
 
 import br.com.gpf.repository.dao.*;
-import br.com.gpf.service.TransactionService;
-import br.com.gpf.service.TransactionServiceImpl;
 
 public class Repository {
     private static Repository instance;
