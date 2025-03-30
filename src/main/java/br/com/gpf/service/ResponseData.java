@@ -5,12 +5,12 @@ import java.util.Map;
 
 public class ResponseData {
     private RequestStatusEnum value;
-    private Map<DataEnum,Object> mapData;
+    private Map<DataEnum, Object> mapData;
 
     public ResponseData() {
         this.value = RequestStatusEnum.DEFAULT;
         this.mapData = new HashMap<>();
-        mapData.put(DataEnum.NULL,"null");
+        mapData.put(DataEnum.NULL, "null");
     }
 
     public ResponseData(RequestStatusEnum value, Map<DataEnum, Object> mapData) {

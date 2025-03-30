@@ -4,15 +4,14 @@ import br.com.gpf.view.screen.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GpfScreenManager extends JFrame {
-    private static GpfScreenManager instance;
-
     private static final String FRAME_TITLE = "Gerenciador Pessoal de Finanças";
-    private static final Integer FRAME_WIDTH = 800;
+    private static final Integer FRAME_WIDTH = 900;
     private static final Integer FRAME_HEIGHT = 600;
-
-
+    private static GpfScreenManager instance;
     private JPanel topPanel;
     private JPanel midPanel;
     private JPanel bottomPanel;
@@ -43,6 +42,30 @@ public class GpfScreenManager extends JFrame {
     }
 
     private void loadLayout() {
+        Font font = new Font("Arial", Font.BOLD, 14);
+        UIManager.put("Button.font", font);
+        UIManager.put("Label.font", font);
+        UIManager.put("TextField.font", font);
+        UIManager.put("TextArea.font", font);
+        UIManager.put("ComboBox.font", font);
+        UIManager.put("Menu.font", font);
+        UIManager.put("Table.font", font);
+        UIManager.put("TableHeader.font", font);
+        UIManager.put("TitledBorder.font", font);
+        Font buttonFont = new Font("Arial", Font.BOLD, 14);
+        UIManager.put("Button.font", buttonFont);
+
+        UIManager.put("Button.foreground", Color.WHITE);
+
+        UIManager.put("Button.background", new Color(0, 123, 255));
+
+        UIManager.put("Button.border", BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(0, 102, 204), 2),
+                BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+
+
+
         setLayout(new GridBagLayout());
 
         gbc = new GridBagConstraints();
@@ -73,25 +96,28 @@ public class GpfScreenManager extends JFrame {
 
 
     public Screen loadScreenPanel(ScreenEnum screenEnum) {
-       switch (screenEnum){
-           case ScreenEnum.LOGIN ->{
-               return new LoginScreen();
-           }
-           case ScreenEnum.NEW_ACCOUNT ->{
-               return new NewAccountScreen();
-           }
-           case ScreenEnum.HOME -> {
-               return new HomeScreen();
-           }
-           case ScreenEnum.TRANSACTION_TYPES -> {
-               return new TransactionTypesScreen();
-           }
-           case ScreenEnum.ADD_TRANSACTION -> {
-               return new TransactionAddScreen();
-           }
-           case TRANSACTION_HISTORY -> {
-               return  new TransactionHistoryScreen();
-           }
+        switch (screenEnum) {
+            case ScreenEnum.LOGIN -> {
+                return new LoginScreen();
+            }
+            case ScreenEnum.NEW_ACCOUNT -> {
+                return new NewAccountScreen();
+            }
+            case ScreenEnum.HOME -> {
+                return new HomeScreen();
+            }
+            case ScreenEnum.TRANSACTION_TYPES -> {
+                return new TransactionTypesScreen();
+            }
+            case ScreenEnum.ADD_TRANSACTION -> {
+                return new TransactionAddScreen();
+            }
+            case TRANSACTION_HISTORY -> {
+                return new TransactionHistoryScreen();
+            }
+            case REPORTS -> {
+                return new ReportScreen();
+            }
         }
         return null;
     }
@@ -140,5 +166,7 @@ public class GpfScreenManager extends JFrame {
 
 
     }
+
+
 }
 

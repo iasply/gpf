@@ -7,22 +7,25 @@ import java.util.Date;
 public class Controller {
 
     private static Controller instance = null;
-    private AccountService accountService;
-    private TransactionTypeService transactionTypeService;
-    private TransactionService transactionService;
+    private final AccountService accountService;
+    private final TransactionTypeService transactionTypeService;
+    private final TransactionService transactionService;
     private Session session;
+
+
+    private void test() {
+        // Criando contas para o usuário 0 e 1
+        accountService.createAccount("i", "i");
+
+    }
+
     private Controller() {
         this.session = null;
-        this.accountService = new  AccountServiceImpl();
+        this.accountService = new AccountServiceImpl();
         this.transactionTypeService = new TransactionTypeServiceImpl();
         this.transactionService = new TransactionServiceImpl();
 
-        accountService.createAccount("i","i");
-        transactionService.createTransaction(1200.0,1,1,new Date(),"blabla",0);
-        transactionService.createTransaction(120.0,0,1,new Date(),"blabla",0);
-        transactionService.createTransaction(100.0,1,0,new Date(),"blabla",0);
-        transactionService.createTransaction(1200.0,0,0,new Date(),"blabla",0);
-        transactionService.createTransaction(1200.0,1,0,new Date(),"blabla",0);
+        test();
     }
 
     public static Controller getInstance() {

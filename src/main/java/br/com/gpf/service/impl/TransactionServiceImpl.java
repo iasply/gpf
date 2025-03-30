@@ -1,14 +1,12 @@
 package br.com.gpf.service.impl;
 
 import br.com.gpf.repository.Repository;
-
-import java.util.Date;
-
 import br.com.gpf.repository.model.TransactionModel;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
 
+import java.util.Date;
 import java.util.List;
 
 public class TransactionServiceImpl implements TransactionService {
@@ -32,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             if (!success) {
                 responseData.setValue(RequestStatusEnum.ERROR);
-                responseData.getMapData().put(DataEnum.ERROR_MSG, "Failed to create transaction.");
+                responseData.getMapData().put(DataEnum.ERROR_MSG, "Falha ao criar transação.");
                 return responseData;
             }
 
@@ -70,7 +68,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             if (!isUpdated) {
                 responseData.setValue(RequestStatusEnum.ERROR);
-                responseData.getMapData().put(DataEnum.ERROR_MSG, "Failed to update transaction type.");
+                responseData.getMapData().put(DataEnum.ERROR_MSG, "Falha ao atualizar o tipo de transação.");
                 return responseData;
             }
 

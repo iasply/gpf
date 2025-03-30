@@ -10,7 +10,6 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JPanel topPanel;
     protected JPanel midPanel;
     protected JPanel bottomPanel;
-    private static final String BUTTON_TEXT_HOME = "HOME";
 
 
     protected DefaultTemplateScreen() {
@@ -21,16 +20,71 @@ public abstract class DefaultTemplateScreen implements Screen {
 
 
     protected JButton defaultHomeButton() {
-        JButton homeButton = new JButton(BUTTON_TEXT_HOME);
+        JButton homeButton = new JButton(ScreenEnum.HOME.getTitle());
         homeButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
             GpfScreenManager instance = GpfScreenManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
         }));
         return homeButton;
     }
-    protected JLabel userNameLabel(){
+
+    protected JButton defaultLoginButton() {
+        JButton loginButton = new JButton(ScreenEnum.LOGIN.getTitle());
+        loginButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreenManager instance = GpfScreenManager.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
+        }));
+        return loginButton;
+    }
+
+    protected JButton defaultNewAccountButton() {
+        JButton newAccountButton = new JButton(ScreenEnum.NEW_ACCOUNT.getTitle());
+        newAccountButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreenManager instance = GpfScreenManager.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
+        }));
+        return newAccountButton;
+    }
+
+    protected JButton defaultAddTransactionButton() {
+        JButton addTransactionButton = new JButton(ScreenEnum.ADD_TRANSACTION.getTitle());
+        addTransactionButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreenManager instance = GpfScreenManager.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
+        }));
+        return addTransactionButton;
+    }
+
+    protected JButton defaultTransactionHistoryButton() {
+        JButton transactionHistoryButton = new JButton(ScreenEnum.TRANSACTION_HISTORY.getTitle());
+        transactionHistoryButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreenManager instance = GpfScreenManager.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
+        }));
+        return transactionHistoryButton;
+    }
+
+    protected JButton defaultTransactionTypesButton() {
+        JButton transactionTypesButton = new JButton(ScreenEnum.TRANSACTION_TYPES.getTitle());
+        transactionTypesButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreenManager instance = GpfScreenManager.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_TYPES), null);
+        }));
+        return transactionTypesButton;
+    }
+
+    protected JButton defaultReportsButton() {
+        JButton reportsButton = new JButton(ScreenEnum.REPORTS.getTitle());
+        reportsButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
+            GpfScreenManager instance = GpfScreenManager.getInstance();
+            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.REPORTS), null);
+        }));
+        return reportsButton;
+    }
+
+    protected JLabel userNameLabel() {
         JLabel accountName = new JLabel();
-        accountName.setText("/ USUARIO "+Controller.getInstance().getSession().userName());
+        accountName.setText("/ USUARIO " + Controller.getInstance().getSession().userName());
         return accountName;
     }
 
@@ -38,17 +92,14 @@ public abstract class DefaultTemplateScreen implements Screen {
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
         topPanel.add(new JLabel(getTittle()));
-        //topPanel.setBackground(Color.red);
     }
 
     private void defaultMidPanel() {
         midPanel = new JPanel();
-        // midPanel.setBackground(Color.GREEN);
     }
 
     private void defaultBottomPanel() {
         bottomPanel = new JPanel();
-        bottomPanel.setBackground(Color.blue);
         bottomPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
     }
 

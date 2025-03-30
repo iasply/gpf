@@ -9,17 +9,16 @@ import java.awt.*;
 
 public class HomeScreen extends DefaultTemplateScreen {
 
+    private static final String BUTTON_TEXT_ADD_TRANSACTION = "ADICIONAR TRANSAÇÃO";
+    private static final String BUTTON_TEXT_TRANSACTION_HISTORY = "HISTÓRICO DE TRANSAÇÕES";
+    private static final String BUTTON_TEXT_TRANSACTION_CATEGORIES = "TIPOS DE TRANSAÇÕES";
+    private static final String BUTTON_TEXT_REPORTS = "RELATÓRIOS";
+    private static final String BUTTON_TEXT_EXIT_ACCOUNT = "SAIR DA CONTA";
     private final JButton addTransactionButton;
     private final JButton transactionHistoryButton;
     private final JButton transactionTypesButton;
     private final JButton reportsButton;
     private final JButton exitAccountButton;
-
-    private static final String BUTTON_TEXT_ADD_TRANSACTION = "ADD TRANSACTION";
-    private static final String BUTTON_TEXT_TRANSACTION_HISTORY = "TRANSACTION HISTORY";
-    private static final String BUTTON_TEXT_TRANSACTION_CATEGORIES = "TRANSACTION TYPES";
-    private static final String BUTTON_TEXT_REPORTS = "REPORTS";
-    private static final String BUTTON_TEXT_EXIT_ACCOUNT = "EXIT ACCOUNT";
 
 
     public HomeScreen() {

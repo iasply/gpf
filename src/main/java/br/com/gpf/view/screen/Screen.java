@@ -9,10 +9,14 @@ public interface Screen {
 
 
     void onload(LoadData loadData);
+
     void onSave() throws DefaultScreenException;
 
     String getTittle();
+
     JPanel getTopPanel();
+
     JPanel getMidPanel();
+
     JPanel getBottomPanel();
 }

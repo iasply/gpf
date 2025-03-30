@@ -15,18 +15,14 @@ import java.awt.*;
 public class LoginScreen extends DefaultTemplateScreen {
 
 
+    private static final String LABEL_PASSWORD = "Senha:";
+    private static final String LABEL_USERNAME = "Nome de Usuário:";
+    private static final String LABEL_LOGIN = "Entrar";
     private final JTextField userName;
-    private final JButton newAccount;
     private final JButton loginButton;
     private final JPasswordField password;
-
     private final JLabel userNameLabel;
     private final JLabel passwordLabel;
-
-    private static final String LABEL_PASSWORD = "Password:";
-    private static final String LABEL_USERNAME = "User Name:";
-    private static final String LABEL_LOGIN = "LOGIN";
-    private static final String LABEL_NEW_ACCOUNT = "NEW ACCOUNT";
 
     public LoginScreen() {
         this.userNameLabel = new JLabel(LABEL_USERNAME);
@@ -34,7 +30,6 @@ public class LoginScreen extends DefaultTemplateScreen {
         this.userName = new JTextField();
         this.password = new JPasswordField();
         this.loginButton = new JButton(LABEL_LOGIN);
-        this.newAccount = new JButton(LABEL_NEW_ACCOUNT);
     }
 
 
@@ -46,7 +41,7 @@ public class LoginScreen extends DefaultTemplateScreen {
             if (responseData.getValue() != RequestStatusEnum.SUCCESS) {
 
                 String msg = DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
-                MessageDialogEnum.ERROR.showMsg(msg,null);
+                MessageDialogEnum.ERROR.showMsg(msg, null);
 
                 SwingUtilities.invokeLater(() -> {
                     GpfScreenManager instance = GpfScreenManager.getInstance();
@@ -64,10 +59,6 @@ public class LoginScreen extends DefaultTemplateScreen {
         });
 
 
-        newAccount.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
-            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
-        }));
     }
 
     @Override
@@ -115,15 +106,13 @@ public class LoginScreen extends DefaultTemplateScreen {
         gbc.gridy = 2;
         super.midPanel.add(loginButton, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        super.midPanel.add(newAccount, gbc);
 
         return super.midPanel;
     }
 
     @Override
     public JPanel getBottomPanel() {
+        super.bottomPanel.add(super.defaultNewAccountButton());
         return this.bottomPanel;
     }
 }

@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TransactionTypesDaoImpl implements TransactionTypesDao {
-    private int id = 0;
     private final List<TransactionTypesModel> list;
+    private int id = 0;
 
     public TransactionTypesDaoImpl() {
         this.list = new ArrayList<>();

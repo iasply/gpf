@@ -4,11 +4,11 @@ import br.com.gpf.service.DataEnum;
 
 public enum FilterColumnEnum {
 
-    CLASSIFICATION ("Classification", DataEnum.FILTER_CLASSIFICATION),
-    VALUE ("Value",DataEnum.FILTER_VALUE),
-    TYPE ("Type",DataEnum.FILTER_TYPE),
-    DESCRIPTION ("Transaction Description",DataEnum.FILTER_DESCRIPTION),
-    DATE ("Date",DataEnum.FILTER_DATE);
+    CLASSIFICATION ("Classificacao", DataEnum.FILTER_CLASSIFICATION),
+    VALUE ("Valor",DataEnum.FILTER_VALUE),
+    TYPE ("Tipo",DataEnum.FILTER_TYPE),
+    DESCRIPTION ("Descricao",DataEnum.FILTER_DESCRIPTION),
+    DATE ("Data",DataEnum.FILTER_DATE);
 
 
     private final String name;
@@ -29,10 +29,10 @@ public enum FilterColumnEnum {
 
     public static FilterColumnEnum toEnum(String str) {
         for (FilterColumnEnum value : FilterColumnEnum.values()) {
-            if (value.name().equalsIgnoreCase(str)) {
+            if (value.getName().equalsIgnoreCase(str)) {
                 return value;
             }
         }
-        throw new IllegalArgumentException("Unknown enum constant: " + str);
+        throw new IllegalArgumentException("Constante de enum desconhecida: " + str);
     }
 }

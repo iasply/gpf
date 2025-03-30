@@ -1,14 +1,13 @@
 package br.com.gpf.repository.dao;
 
-import br.com.gpf.repository.dao.UserDao;
 import br.com.gpf.repository.model.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
-    private int id = 0;
     private final List<UserModel> list;
+    private int id = 0;
 
     public UserDaoImpl() {
         this.list = new ArrayList<>();

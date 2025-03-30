@@ -15,21 +15,18 @@ import java.awt.*;
 
 public class NewAccountScreen extends DefaultTemplateScreen {
 
+    private static final String LABEL_PASSWORD = "Senha:";
+    private static final String LABEL_CONFIRM_PASSWORD = "Confirmar Senha:";
+    private static final String LABEL_USERNAME = "Nome de Usuário:";
+    private static final String LABEL_REGISTER = "Cadastrar";
     private final JTextField userName;
     private final JPasswordField password;
     private final JPasswordField confirmPassword;
     private final JButton register;
-    private final JButton back;
-
     private final JLabel userNameLabel;
     private final JLabel passwordLabel;
     private final JLabel confirmPasswordLabel;
 
-    private static final String LABEL_PASSWORD = "Password:";
-    private static final String LABEL_CONFIRM_PASSWORD = "Confirm Password:";
-    private static final String LABEL_USERNAME = "User Name:";
-    private static final String LABEL_REGISTER = "REGISTER";
-    private static final String LABEL_BACK_TO_LOGIN = "back to login";
 
     public NewAccountScreen() {
         this.userNameLabel = new JLabel(LABEL_USERNAME);
@@ -37,7 +34,6 @@ public class NewAccountScreen extends DefaultTemplateScreen {
         this.userName = new JTextField();
         this.password = new JPasswordField();
         this.register = new JButton(LABEL_REGISTER);
-        this.back = new JButton(LABEL_BACK_TO_LOGIN);
         this.confirmPassword = new JPasswordField();
         this.confirmPasswordLabel = new JLabel(LABEL_CONFIRM_PASSWORD);
     }
@@ -50,14 +46,14 @@ public class NewAccountScreen extends DefaultTemplateScreen {
             try {
                 onSave();
             } catch (DefaultScreenException ex) {
-                MessageDialogEnum.ERROR.showMsg(ex.getMessage(),null);
+                MessageDialogEnum.ERROR.showMsg(ex.getMessage(), null);
                 return;
             }
 
             ResponseData responseData = Controller.getInstance().getAccountService().createAccount(userName.getText(), new String(password.getPassword()));
             if (responseData.getValue() != RequestStatusEnum.SUCCESS) {
                 String msg = DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
-                MessageDialogEnum.ERROR.showMsg(msg,null);
+                MessageDialogEnum.ERROR.showMsg(msg, null);
 
                 SwingUtilities.invokeLater(() -> {
                     GpfScreenManager instance = GpfScreenManager.getInstance();
@@ -66,7 +62,7 @@ public class NewAccountScreen extends DefaultTemplateScreen {
                 return;
             }
 
-            MessageDialogEnum.SUCCESS.showMsg("USER " + userName.getText() + " CREATED",null);
+            MessageDialogEnum.SUCCESS.showMsg("USUÁRIO " + userName.getText() + " CRIADO", null);
 
             SwingUtilities.invokeLater(() -> {
                 GpfScreenManager instance = GpfScreenManager.getInstance();
@@ -75,11 +71,6 @@ public class NewAccountScreen extends DefaultTemplateScreen {
 
 
         });
-
-        back.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
-            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
-        }));
 
     }
 
@@ -90,11 +81,11 @@ public class NewAccountScreen extends DefaultTemplateScreen {
                 ||
                 Util.isBlankNullOrEmpty(new String(confirmPassword.getPassword()))
         ) {
-            throw new DefaultScreenException("FILL IN ALL FIELDS");
+            throw new DefaultScreenException("PREENCHA TODOS OS CAMPOS");
         }
 
         if (!new String(password.getPassword()).equals(new String(confirmPassword.getPassword()))) {
-            throw new DefaultScreenException("PASSWORDS MUST BE THE SAME");
+            throw new DefaultScreenException("AS SENHAS DEVEM SER IGUAIS");
         }
 
 
@@ -152,9 +143,6 @@ public class NewAccountScreen extends DefaultTemplateScreen {
         gbc.gridwidth = 2;
         super.midPanel.add(register, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        super.midPanel.add(back, gbc);
 
         return super.midPanel;
     }
@@ -162,6 +150,9 @@ public class NewAccountScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getBottomPanel() {
+
+        super.bottomPanel.add(super.defaultLoginButton());
+
         return this.bottomPanel;
     }
 }

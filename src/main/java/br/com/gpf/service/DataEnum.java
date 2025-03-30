@@ -29,7 +29,7 @@ public enum DataEnum {
                     FILTER_DATE -> {
                 return (String) object;
             }
-            default -> throw new RuntimeException("invalid data parse");
+            default -> throw new RuntimeException("Conversão de dados inválida");
         }
     }
 
@@ -37,13 +37,13 @@ public enum DataEnum {
         if (Objects.requireNonNull(dataEnum) == DataEnum.USER_TYPES) {
             return (List<TransactionTypesModel>) object;
         }
-        throw new RuntimeException("invalid data parse");
+        throw new RuntimeException("Conversão de dados inválida");
     }
 
     public static List<TransactionModel> decodeTransactionModel(DataEnum dataEnum, Object object) {
         if (Objects.requireNonNull(dataEnum) == USER_TRANSACTIONS) {
             return (List<TransactionModel>) object;
         }
-        throw new RuntimeException("invalid data parse");
+        throw new RuntimeException("Conversão de dados inválida");
     }
 }

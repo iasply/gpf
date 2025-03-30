@@ -19,32 +19,27 @@ import static br.com.gpf.view.ConstValues.*;
 
 public class TransactionAddScreen extends DefaultTemplateScreen {
 
-    private static final String LABEL_CREATE_TRANSACTION = "Create Transaction";
-    private static final String LABEL_TYPE = "Type:";
-    private static final String LABEL_VALUE = "Value:";
-    private static final String LABEL_DATE = "Date:";
-    private static final String LABEL_DESCRIPTION = "Description:";
+    private static final String LABEL_CREATE_TRANSACTION = "Criar Transação";
+    private static final String LABEL_TYPE = "Tipo:";
+    private static final String LABEL_VALUE = "Valor:";
+    private static final String LABEL_DATE = "Data:";
+    private static final String LABEL_DESCRIPTION = "Descrição:";
+    private static final String BUTTON_LABEL_SAVE = "Salvar";
 
-    private static final String BUTTON_LABEL_SAVE = "Save";
-    private static final String BUTTON_LABEL_TRANSACTION_HISTORY = "TRANSACTION HISTORY";
-    private static final String BUTTON_LABEL_REPORTS = "REPORTS";
 
     private final JTextField valueField;
     private final JTextArea descriptionField;
     private final JRadioButton incomeRadioButton;
     private final JRadioButton expenseRadioButton;
     private final ButtonGroup transactionTypeGroup;
-    private JComboBox<TransactionTypesModel> typeComboBox;
     private final JSpinner dateSpinner;
     private final JButton saveButton;
-    private final JButton transactionHistoryButton;
-    private final JButton reportsButton;
-
     private final JLabel createTransactionLabel;
     private final JLabel typeLabel;
     private final JLabel valueLabel;
     private final JLabel dateLabel;
     private final JLabel descriptionLabel;
+    private JComboBox<TransactionTypesModel> typeComboBox;
 
 
     public TransactionAddScreen() {
@@ -72,8 +67,6 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
 
         this.saveButton = new JButton(BUTTON_LABEL_SAVE);
 
-        this.transactionHistoryButton = new JButton(BUTTON_LABEL_TRANSACTION_HISTORY);
-        this.reportsButton = new JButton(BUTTON_LABEL_REPORTS);
     }
 
     @Override
@@ -107,8 +100,7 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
                         value, transactionCategory, transactionType.getId(), selectedDate, descriptionText, Controller.getInstance().getSession().id());
 
                 if (responseData.getValue() == RequestStatusEnum.SUCCESS) {
-                    MessageDialogEnum.SUCCESS.showMsg("Transaction saved successfully!", null);
-
+                    MessageDialogEnum.SUCCESS.showMsg("Transação salva com sucesso!", null);
                     SwingUtilities.invokeLater(() -> {
                         GpfScreenManager instance = GpfScreenManager.getInstance();
                         instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
@@ -116,29 +108,13 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
                     return;
                 }
 
-                MessageDialogEnum.ERROR.showMsg("Failed to save the transaction: " + DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG)), null);
-
+                MessageDialogEnum.ERROR.showMsg("Falha ao salvar a transação: " + DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG)), null);
             } catch (DefaultScreenException ex) {
                 MessageDialogEnum.ERROR.showMsg(ex.getMessage(), null);
             }
 
         });
 
-
-        transactionHistoryButton.addActionListener(e -> {
-
-            SwingUtilities.invokeLater(() -> {
-                GpfScreenManager instance = GpfScreenManager.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
-            });
-        });
-
-        reportsButton.addActionListener(e ->{
-            SwingUtilities.invokeLater(() -> {
-                GpfScreenManager instance = GpfScreenManager.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.REPORTS), null);
-            });
-        });
     }
 
     @Override
@@ -149,13 +125,13 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
         TransactionTypesModel transactionType = (TransactionTypesModel) typeComboBox.getSelectedItem();
 
         if (valueText.isEmpty() || selectedDate == null || transactionType == null || (!incomeRadioButton.isSelected() && !expenseRadioButton.isSelected())) {
-            throw new DefaultScreenException("Please fill in all the required fields.");
+            throw new DefaultScreenException("Por favor, preencha todos os campos obrigatórios.");
         }
 
         try {
-           Double.parseDouble(valueText);
+            Double.parseDouble(valueText);
         } catch (NumberFormatException ex) {
-            throw new DefaultScreenException("Invalid value. Please enter a numeric value.");
+            throw new DefaultScreenException("Valor inválido. Por favor, insira um valor numérico.");
         }
     }
 
@@ -230,9 +206,9 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getBottomPanel() {
-
-        super.bottomPanel.add(transactionHistoryButton);
-        super.bottomPanel.add(reportsButton);
+        super.bottomPanel.add(super.defaultTransactionTypesButton());
+        super.bottomPanel.add(super.defaultReportsButton());
+        super.bottomPanel.add(super.defaultTransactionHistoryButton());
         super.bottomPanel.add(super.defaultHomeButton());
 
         return super.bottomPanel;

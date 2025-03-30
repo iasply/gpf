@@ -21,21 +21,20 @@ import static br.com.gpf.view.screen.FilterColumnEnum.*;
 
 public class TransactionHistoryScreen extends DefaultTemplateScreen {
 
-    private static final String LABEL_FILTER = "Filter by Type:";
-    private static final String LABEL_SEARCH = "Search:";
-    private static final String LABEL_CLEAR_SELECTION = "Clear Selection";
-    private StringBuilder filterString ;
-
-    private JTable table;
+    private static final String LABEL_FILTER = "Filtrar por Tipo:";
+    private static final String LABEL_SEARCH = "Pesquisar:";
+    private static final String LABEL_CLEAR_SELECTION = "Limpar Seleção";
     private final JComboBox<String> filterComboBox;
     private final JTextField searchField;
     private final JButton searchButton;
     private final JButton clearSelectionButton;
     private final Vector<String> columnNames;
+    private final StringBuilder filterString;
+    private JTable table;
 
     public TransactionHistoryScreen() {
         this.searchField = new JTextField(15);
-        this.searchButton = new JButton("Search");
+        this.searchButton = new JButton("Filtrar");
         this.clearSelectionButton = new JButton(LABEL_CLEAR_SELECTION);
 
         columnNames = new Vector<>();
@@ -44,7 +43,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
         columnNames.add(TYPE.getName());
         columnNames.add(DESCRIPTION.getName());
         columnNames.add(DATE.getName());
-        filterString= new StringBuilder();
+        filterString = new StringBuilder();
         filterString.append("/ FILTROS?");
         this.filterComboBox = new JComboBox<>(columnNames);
     }
@@ -99,7 +98,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                     filterString.append(" ");
                     filterString.append(CLASSIFICATION.getName());
                     filterString.append("=");
-                    filterString.append(classificationFilter );
+                    filterString.append(classificationFilter);
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> {
                                 Integer transactionClassification = transaction.getTransactionClassification();
@@ -121,7 +120,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                     filterString.append(" ");
                     filterString.append(VALUE.getName());
                     filterString.append("=");
-                    filterString.append(valueFilter );
+                    filterString.append(valueFilter);
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> transaction.getValue().toString().equals(valueFilter))
                             .collect(Collectors.toList());
@@ -202,7 +201,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
     }
 
     @Override
-    public  JPanel getTopPanel(){
+    public JPanel getTopPanel() {
         super.topPanel.add(userNameLabel());
         super.topPanel.add(new JLabel(filterString.toString()));
         return super.topPanel;
@@ -232,15 +231,15 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
         String selectedFilter = (String) filterComboBox.getSelectedItem();
 
         if (selectedFilter == null || selectedFilter.isEmpty()) {
-            throw new DefaultScreenException("Please select a valid filter.");
+            throw new DefaultScreenException("Por favor, selecione um filtro válido.");
         }
 
         if (searchText.isEmpty()) {
-            throw new DefaultScreenException("Please enter a search term.");
+            throw new DefaultScreenException("Por favor, insira um termo de busca.");
         }
 
         if (selectedFilter.equals("Date") && !validateDateFormat(searchText)) {
-            throw new DefaultScreenException("Please enter a valid date in the format " + DATE_FORMAT + ".");
+            throw new DefaultScreenException("Por favor, insira uma data válida no formato " + DATE_FORMAT + ".");
         }
 
     }
@@ -252,6 +251,9 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getBottomPanel() {
+        super.bottomPanel.add(super.defaultTransactionTypesButton());
+        super.bottomPanel.add(super.defaultReportsButton());
+        super.bottomPanel.add(super.defaultAddTransactionButton());
         super.bottomPanel.add(super.defaultHomeButton());
         return super.bottomPanel;
     }

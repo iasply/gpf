@@ -35,8 +35,8 @@ public class AccountServiceImpl implements AccountService {
         if (userCreated) {
             UserModel userByName = repository.getUserDao().getUserByName(userName);
 
-            repository.getTransactionTypesDao().createType(new TransactionTypesModel("CREDIT", userByName.getId()));
-            repository.getTransactionTypesDao().createType(new TransactionTypesModel("DEBIT", userByName.getId()));
+            repository.getTransactionTypesDao().createType(new TransactionTypesModel("Salario", userByName.getId()));
+            repository.getTransactionTypesDao().createType(new TransactionTypesModel("Cartão", userByName.getId()));
 
             responseData.setValue(RequestStatusEnum.SUCCESS);
             return responseData;

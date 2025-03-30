@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class LoadData {
 
-    private Map<DataEnum,Object> mapData;
+    private final Map<DataEnum, Object> mapData;
 
     public LoadData() {
         this.mapData = new HashMap<>();

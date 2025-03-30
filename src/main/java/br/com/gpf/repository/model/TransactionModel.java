@@ -3,13 +3,13 @@ package br.com.gpf.repository.model;
 import java.util.Date;
 
 public class TransactionModel {
-   private Integer id;
-   private Double value;
-   private Integer transactionClassification;
-   private Integer transactionTypeId;
-   private Date date;
-   private String descriptionText;
-   private Integer userId;
+    private Integer id;
+    private Double value;
+    private Integer transactionClassification;
+    private Integer transactionTypeId;
+    private Date date;
+    private String descriptionText;
+    private Integer userId;
 
     public TransactionModel() {
     }
