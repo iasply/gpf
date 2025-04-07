@@ -21,7 +21,7 @@ public class GpfScreenManager extends JFrame {
     private GpfScreenManager() {
         setTitle(FRAME_TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+       // setLocationRelativeTo(null);
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));

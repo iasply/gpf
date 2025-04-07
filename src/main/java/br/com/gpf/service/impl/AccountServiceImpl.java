@@ -29,8 +29,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseData createAccount(String userName, String password) {
-        boolean userCreated = repository.getUserDao().createUser(userName, password);
+
         ResponseData responseData = new ResponseData();
+
+        if(repository.getUserDao().getUserByName(userName) != null) {
+            responseData.setValue(RequestStatusEnum.ERROR);
+            responseData.getMapData().put(DataEnum.ERROR_MSG, "JÁ EXISTE UM USUARIO COM ESSE NOME");
+            return responseData;
+        }
+
+        boolean userCreated = repository.getUserDao().createUser(userName, password);
 
         if (userCreated) {
             UserModel userByName = repository.getUserDao().getUserByName(userName);
