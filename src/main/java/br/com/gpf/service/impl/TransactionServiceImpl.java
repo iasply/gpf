@@ -2,6 +2,8 @@ package br.com.gpf.service.impl;
 
 import br.com.gpf.repository.Repository;
 import br.com.gpf.repository.model.TransactionModel;
+import br.com.gpf.repository.model.TransactionTypesModel;
+import br.com.gpf.repository.model.UserModel;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
@@ -16,12 +18,15 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public ResponseData createTransaction(Double value, Integer transactionClassification, Integer transactionTypeId, Date transactionDate, String descriptionText, Integer userId) {
         ResponseData responseData = new ResponseData();
+        UserModel userById = repository.getUserDao().getUserById(userId);
+        TransactionTypesModel typeById = repository.getTransactionTypesDao().getTypeById(transactionTypeId);
 
         try {
             TransactionModel transaction = new TransactionModel();
-            transaction.setUserId(userId);
+
+            transaction.setUser(userById);
             transaction.setValue(value);
-            transaction.setTransactionTypeId(transactionTypeId);
+            transaction.setTransactionType(typeById);
             transaction.setTransactionClassification(transactionClassification);
             transaction.setDate(transactionDate);
             transaction.setDescriptionText(descriptionText);

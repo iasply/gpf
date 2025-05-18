@@ -159,16 +159,18 @@ public class ReportScreen extends DefaultTemplateScreen {
             List<TransactionTypesModel> transactionTypes = DataEnum.decodeTransactionTypes(DataEnum.USER_TYPES,
                     responseDataTransactionType.getMapData().get(DataEnum.USER_TYPES));
 
-            // Calculate totals and type counts using streams
             Map<Integer, Long> incomeTypeCount = transactions.stream()
                     .filter(transaction -> transaction.getTransactionClassification().equals(CONST_INCOME) &&
                             !transaction.getDate().before(start) && !transaction.getDate().after(end))
-                    .collect(Collectors.groupingBy(TransactionModel::getTransactionTypeId, Collectors.counting()));
+                    .collect(Collectors.groupingBy(transaction -> transaction.getTransactionType().getId(),Collectors.counting()));
 
             Map<Integer, Long> expenseTypeCount = transactions.stream()
                     .filter(transaction -> transaction.getTransactionClassification().equals(CONST_EXPENSE) &&
                             !transaction.getDate().before(start) && !transaction.getDate().after(end))
-                    .collect(Collectors.groupingBy(TransactionModel::getTransactionTypeId, Collectors.counting()));
+                    .collect(Collectors.groupingBy(
+                            transaction -> transaction.getTransactionType().getId(),
+                            Collectors.counting()));
+
 
             double totalIncome = transactions.stream()
                     .filter(transaction -> transaction.getTransactionClassification().equals(CONST_INCOME) &&

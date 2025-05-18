@@ -8,4 +8,6 @@ public interface UserDao {
     boolean createUser(String userName, String password);
 
     UserModel getUserByName(String userName);
+
+    UserModel getUserById(Integer id);
 }

@@ -15,4 +15,6 @@ public interface TransactionTypesDao {
 
     boolean deleteType(Integer userId, Integer typeId);
 
+    TransactionTypesModel getTypeById(Integer id);
+
 }

@@ -1,37 +1,83 @@
 package br.com.gpf.repository.dao;
 
 import br.com.gpf.repository.model.UserModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 
 public class UserDaoImpl implements UserDao {
-    private final List<UserModel> list;
-    private int id = 0;
 
-    public UserDaoImpl() {
-        this.list = new ArrayList<>();
+    private final EntityManager entityManager;
+
+    public UserDaoImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
     public boolean isValidUser(String userName, String password) {
-        return list.stream().anyMatch(userModel -> userModel.getUserName().equals(userName) && userModel.getPassword().equals(password));
+        TypedQuery<Long> query = entityManager.createQuery(
+                "select count(u) from UserModel u where u.userName = :username and u.password = :password", Long.class);
+        query.setParameter("username", userName);
+        query.setParameter("password", password);
+
+        return query.getSingleResult() > 0;
     }
 
     @Override
     public boolean createUser(String userName, String password) {
-        list.add(new UserModel(id, userName, password));
-        id++;
-        return true;
+        try {
+            Long count = entityManager.createQuery(
+                            "select count(u) from UserModel u where u.userName = :userName", Long.class)
+                    .setParameter("userName", userName)
+                    .getSingleResult();
+
+            if (count > 0) {
+                return false;
+            }
+
+            entityManager.getTransaction().begin();
+
+            UserModel user = new UserModel();
+            user.setUserName(userName);
+            user.setPassword(password);
+
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+
+            return true;
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     @Override
     public UserModel getUserByName(String userName) {
-        return list.stream()
-                .filter(i -> i.getUserName().equals(userName))
-                .findFirst()
-                .orElse(null);
+        try {
+            return entityManager.createQuery(
+                            "select u from UserModel u where u.userName = :username", UserModel.class)
+                    .setParameter("username", userName)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+           e.printStackTrace();
+        }
+        return null;
     }
 
-
+    @Override
+    public UserModel getUserById(Integer id) {
+        try {
+            return entityManager.createQuery(
+                            "select u from UserModel u where u.id = :id", UserModel.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

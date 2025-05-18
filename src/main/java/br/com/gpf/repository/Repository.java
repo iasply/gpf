@@ -1,17 +1,28 @@
 package br.com.gpf.repository;
 
 import br.com.gpf.repository.dao.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 public class Repository {
     private static Repository instance;
-    private final UserDao userDao;
-    private final TransactionTypesDao transactionTypesDao;
-    private final TransactionDao transactionDao;
+    private UserDao userDao;
+    private TransactionTypesDao transactionTypesDao;
+    private TransactionDao transactionDao;
 
     private Repository() {
-        this.userDao = new UserDaoImpl();
-        this.transactionTypesDao = new TransactionTypesDaoImpl();
-        this.transactionDao = new TransactionDaoImpl();
+        Configuration configuration = new Configuration();
+        configuration.configure(); // lê hibernate.cfg.xml
+
+
+        SessionFactory factory = configuration.buildSessionFactory();
+        Session session = factory.openSession();
+            this.userDao = new UserDaoImpl(session);
+            this.transactionTypesDao = new TransactionTypesDaoImpl(session);
+            this.transactionDao = new TransactionDaoImpl(session);
+
     }
 
     public static Repository getInstance() {

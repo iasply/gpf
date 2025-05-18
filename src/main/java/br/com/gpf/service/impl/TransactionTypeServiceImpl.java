@@ -2,6 +2,7 @@ package br.com.gpf.service.impl;
 
 import br.com.gpf.repository.Repository;
 import br.com.gpf.repository.model.TransactionTypesModel;
+import br.com.gpf.repository.model.UserModel;
 import br.com.gpf.service.DataEnum;
 import br.com.gpf.service.RequestStatusEnum;
 import br.com.gpf.service.ResponseData;
@@ -16,7 +17,8 @@ public class TransactionTypeServiceImpl implements TransactionTypeService {
     public ResponseData createType(Integer userId, String desc) {
         ResponseData responseData = new ResponseData();
         try {
-            repository.getTransactionTypesDao().createType(new TransactionTypesModel(desc, userId));
+            UserModel userById = repository.getUserDao().getUserById(userId);
+            repository.getTransactionTypesDao().createType(new TransactionTypesModel(desc, userById));
         } catch (Exception e) {
             responseData.setValue(RequestStatusEnum.ERROR);
             responseData.getMapData().put(DataEnum.ERROR_MSG, e.getMessage());

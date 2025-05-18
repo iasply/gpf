@@ -135,7 +135,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                     transactionModels = transactionModels.stream()
                             .filter(transaction -> {
                                 TransactionTypesModel typeModel = transactionTypesModels.stream()
-                                        .filter(type -> type.getId().equals(transaction.getTransactionTypeId()))
+                                        .filter(type -> type.getId().equals(transaction.getTransactionType().getId()))
                                         .findFirst()
                                         .orElse(null);
                                 return typeModel != null && typeModel.getDesc().equals(typeFilter);
@@ -177,7 +177,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                 row.add(transaction.getValue().toString());
 
                 TransactionTypesModel typeModel = transactionTypesModels.stream()
-                        .filter(type -> type.getId().equals(transaction.getTransactionTypeId()))
+                        .filter(type -> type.getId().equals(transaction.getTransactionType().getId()))
                         .findFirst()
                         .orElse(null);
                 row.add(typeModel != null ? typeModel.getDesc() : "");

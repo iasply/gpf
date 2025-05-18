@@ -1,37 +1,56 @@
 package br.com.gpf.repository.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "transactions")
 public class TransactionModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
+    @Column(nullable = false)
     private Double value;
+    @Column(name = "transaction_classification", nullable = false)
     private Integer transactionClassification;
-    private Integer transactionTypeId;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_type_id", nullable = false)
+    private TransactionTypesModel transactionType;
+
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date date;
+    @Column(name = "description_text")
     private String descriptionText;
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserModel user;
 
     public TransactionModel() {
     }
 
-    public TransactionModel(Double value, Integer transactionClassification, Integer transactionTypeId, Date date, String descriptionText, Integer userId) {
+    public TransactionModel(Double value, Integer transactionClassification, TransactionTypesModel transactionType, Date date, String descriptionText, UserModel user) {
         this.value = value;
         this.transactionClassification = transactionClassification;
-        this.transactionTypeId = transactionTypeId;
+        this.transactionType = transactionType;
         this.date = date;
         this.descriptionText = descriptionText;
-        this.userId = userId;
+        this.user = user;
     }
 
-    public TransactionModel(Integer id, Double value, Integer transactionClassification, Integer transactionTypeId, Date date, String descriptionText, Integer userId) {
+    public TransactionModel(Integer id, Double value, Integer transactionClassification, TransactionTypesModel transactionType, Date date, String descriptionText, UserModel user) {
         this.id = id;
         this.value = value;
         this.transactionClassification = transactionClassification;
-        this.transactionTypeId = transactionTypeId;
+        this.transactionType = transactionType;
         this.date = date;
         this.descriptionText = descriptionText;
-        this.userId = userId;
+        this.user = user;
     }
+
 
     public Integer getId() {
         return id;
@@ -57,12 +76,12 @@ public class TransactionModel {
         this.transactionClassification = transactionClassification;
     }
 
-    public Integer getTransactionTypeId() {
-        return transactionTypeId;
+    public TransactionTypesModel getTransactionType() {
+        return transactionType;
     }
 
-    public void setTransactionTypeId(Integer transactionTypeId) {
-        this.transactionTypeId = transactionTypeId;
+    public void setTransactionType(TransactionTypesModel transactionType) {
+        this.transactionType = transactionType;
     }
 
     public Date getDate() {
@@ -81,11 +100,13 @@ public class TransactionModel {
         this.descriptionText = descriptionText;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }
+
+
