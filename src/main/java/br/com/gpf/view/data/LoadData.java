@@ -1,4 +1,4 @@
-package br.com.gpf.view;
+package br.com.gpf.view.data;
 
 import br.com.gpf.controller.DataEnum;
 
@@ -11,7 +11,6 @@ public class LoadData {
 
     public LoadData() {
         this.mapData = new HashMap<>();
-
     }
 
     public Map<DataEnum, Object> getMapData() {

@@ -1,6 +1,6 @@
 package br.com.gpf.controller.impl;
 
-import br.com.gpf.model.Repository;
+import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.model.entity.TransactionModel;
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.model.entity.UserModel;
@@ -14,13 +14,14 @@ import java.util.List;
 
 public class TransactionServiceImpl implements TransactionService {
 
-    private final Repository repository = Repository.getInstance();
+    private final ServiceLocator serviceLocator = ServiceLocator.getInstance();
+
 
     @Override
     public ResponseData createTransaction(Double value, Integer transactionClassification, Integer transactionTypeId, Date transactionDate, String descriptionText, Integer userId) {
         ResponseData responseData = new ResponseData();
-        UserModel userById = repository.getUserDao().getUserById(userId);
-        TransactionTypesModel typeById = repository.getTransactionTypesDao().getTypeById(transactionTypeId);
+        UserModel userById = serviceLocator.getUserDao().getUserById(userId);
+        TransactionTypesModel typeById = serviceLocator.getTransactionTypesDao().getTypeById(transactionTypeId);
 
         try {
             TransactionModel transaction = new TransactionModel();
@@ -32,7 +33,7 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setDate(transactionDate);
             transaction.setDescriptionText(descriptionText);
 
-            boolean success = repository.getTransactionDao().createTransaction(transaction);
+            boolean success = serviceLocator.getTransactionDao().createTransaction(transaction);
 
             if (!success) {
                 responseData.setValue(RequestStatusEnum.ERROR);
@@ -54,7 +55,7 @@ public class TransactionServiceImpl implements TransactionService {
         ResponseData responseData = new ResponseData();
 
         try {
-            List<TransactionModel> transactions = repository.getTransactionDao().getUserTransaction(userId);
+            List<TransactionModel> transactions = serviceLocator.getTransactionDao().getUserTransaction(userId);
             responseData.setValue(RequestStatusEnum.SUCCESS);
             responseData.getMapData().put(DataEnum.USER_TRANSACTIONS, transactions);
         } catch (Exception e) {
@@ -70,7 +71,7 @@ public class TransactionServiceImpl implements TransactionService {
         ResponseData responseData = new ResponseData();
 
         try {
-            boolean isUpdated = repository.getTransactionDao().alterTransactionType(userId, oldTypeId, newTypeId);
+            boolean isUpdated = serviceLocator.getTransactionDao().alterTransactionType(userId, oldTypeId, newTypeId);
 
             if (!isUpdated) {
                 responseData.setValue(RequestStatusEnum.ERROR);

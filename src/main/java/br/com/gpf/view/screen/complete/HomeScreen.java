@@ -1,11 +1,13 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view.screen.complete;
 
-import br.com.gpf.controller.Controller;
-import br.com.gpf.view.GpfScreenManager;
-import br.com.gpf.view.LoadData;
+import br.com.gpf.controller.ServiceLocator;
+import br.com.gpf.controller.GpfScreenControllerManager;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class HomeScreen extends DefaultTemplateScreen {
 
@@ -37,28 +39,28 @@ public class HomeScreen extends DefaultTemplateScreen {
 
         exitAccountButton.addActionListener(e -> {
 
-            Controller.getInstance().setSession(null);
+            ServiceLocator.getInstance().setSession(null);
             SwingUtilities.invokeLater(() -> {
-                GpfScreenManager instance = GpfScreenManager.getInstance();
+                GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
                 instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
             });
 
         });
 
         addTransactionButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
         }));
         transactionTypesButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_TYPES), null);
         }));
         transactionHistoryButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
         }));
         reportsButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.REPORTS), null);
         }));
 
@@ -113,10 +115,29 @@ public class HomeScreen extends DefaultTemplateScreen {
 
     @Override
     public JPanel getBottomPanel() {
-
         super.bottomPanel.add(exitAccountButton);
-
         return super.bottomPanel;
+    }
+
+
+    public void setButtonTextAddTransactionListener(ActionListener listener) {
+        addTransactionButton.addActionListener(listener);
+    }
+
+    public void setButtonTextTransactionHistoryListener(ActionListener listener) {
+        transactionHistoryButton.addActionListener(listener);
+    }
+
+    public void setButtonTextTransactionTypesListener(ActionListener listener) {
+        transactionTypesButton.addActionListener(listener);
+    }
+
+    public void setButtonTextReportsListener(ActionListener listener) {
+        reportsButton.addActionListener(listener);
+    }
+
+    public void setButtonTextExitAccountListener(ActionListener listener) {
+        exitAccountButton.addActionListener(listener);
     }
 
 }

@@ -1,6 +1,6 @@
 package br.com.gpf.controller.impl;
 
-import br.com.gpf.model.Repository;
+import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.model.entity.UserModel;
 import br.com.gpf.controller.DataEnum;
@@ -12,14 +12,15 @@ import java.util.List;
 
 public class TransactionTypeServiceImpl implements TransactionTypeService {
 
-    Repository repository = Repository.getInstance();
+    private final ServiceLocator serviceLocator = ServiceLocator.getInstance();
+
 
     @Override
     public ResponseData createType(Integer userId, String desc) {
         ResponseData responseData = new ResponseData();
         try {
-            UserModel userById = repository.getUserDao().getUserById(userId);
-            repository.getTransactionTypesDao().createType(new TransactionTypesModel(desc, userById));
+            UserModel userById = serviceLocator.getUserDao().getUserById(userId);
+            serviceLocator.getTransactionTypesDao().createType(new TransactionTypesModel(desc, userById));
         } catch (Exception e) {
             responseData.setValue(RequestStatusEnum.ERROR);
             responseData.getMapData().put(DataEnum.ERROR_MSG, e.getMessage());
@@ -33,7 +34,7 @@ public class TransactionTypeServiceImpl implements TransactionTypeService {
     @Override
     public ResponseData getUserTypes(Integer userId) {
         ResponseData responseData = new ResponseData();
-        List<TransactionTypesModel> userTypes = repository.getTransactionTypesDao().getUserTypes(userId);
+        List<TransactionTypesModel> userTypes = serviceLocator.getTransactionTypesDao().getUserTypes(userId);
         responseData.setValue(RequestStatusEnum.SUCCESS);
         responseData.getMapData().put(DataEnum.USER_TYPES, userTypes);
 
@@ -43,7 +44,7 @@ public class TransactionTypeServiceImpl implements TransactionTypeService {
     @Override
     public ResponseData alterType(Integer userId, Integer typeId, String newDesc) {
         ResponseData responseData = new ResponseData();
-        boolean alterTypeBoolean = repository.getTransactionTypesDao().alterType(userId, typeId, newDesc);
+        boolean alterTypeBoolean = serviceLocator.getTransactionTypesDao().alterType(userId, typeId, newDesc);
 
         if (alterTypeBoolean) {
             responseData.setValue(RequestStatusEnum.SUCCESS);
@@ -61,7 +62,7 @@ public class TransactionTypeServiceImpl implements TransactionTypeService {
     public ResponseData deleteType(Integer userId, Integer typeId) {
         ResponseData responseData = new ResponseData();
 
-        boolean isDeleted = repository.getTransactionTypesDao().deleteType(userId, typeId);
+        boolean isDeleted = serviceLocator.getTransactionTypesDao().deleteType(userId, typeId);
 
         if (isDeleted) {
             responseData.setValue(RequestStatusEnum.SUCCESS);

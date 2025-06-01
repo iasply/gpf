@@ -1,16 +1,12 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view.screen.complete;
 
-import br.com.gpf.controller.Controller;
-import br.com.gpf.controller.DataEnum;
-import br.com.gpf.controller.RequestStatusEnum;
-import br.com.gpf.controller.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreenManager;
-import br.com.gpf.view.LoadData;
-import br.com.gpf.view.MessageDialogEnum;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class LoginScreen extends DefaultTemplateScreen {
 
@@ -35,31 +31,9 @@ public class LoginScreen extends DefaultTemplateScreen {
 
     @Override
     public void onload(LoadData loadData) {
-        loginButton.addActionListener(e -> {
-            ResponseData responseData = Controller.getInstance().getAccountService().login(userName.getText(), new String(password.getPassword()));
-
-            if (responseData.getValue() != RequestStatusEnum.SUCCESS) {
-
-                String msg = DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
-                MessageDialogEnum.ERROR.showMsg(msg, null);
-
-                SwingUtilities.invokeLater(() -> {
-                    GpfScreenManager instance = GpfScreenManager.getInstance();
-                    instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
-                });
-                return;
-            }
-
-
-            SwingUtilities.invokeLater(() -> {
-                GpfScreenManager instance = GpfScreenManager.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
-            });
-
-        });
-
 
     }
+
 
     @Override
     public void onSave() throws DefaultScreenException {
@@ -114,5 +88,17 @@ public class LoginScreen extends DefaultTemplateScreen {
     public JPanel getBottomPanel() {
         super.bottomPanel.add(super.defaultNewAccountButton());
         return this.bottomPanel;
+    }
+
+    public String getUserName() {
+        return userName.getText();
+    }
+
+    public void setLoginListener(ActionListener listener) {
+        loginButton.addActionListener(listener);
+    }
+
+    public String getPassword() {
+        return new String(password.getPassword());
     }
 }

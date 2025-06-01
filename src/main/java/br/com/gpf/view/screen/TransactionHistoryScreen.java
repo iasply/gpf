@@ -1,12 +1,16 @@
 package br.com.gpf.view.screen;
 
+import br.com.gpf.controller.GpfScreenControllerManager;
 import br.com.gpf.model.entity.TransactionModel;
 import br.com.gpf.model.entity.TransactionTypesModel;
-import br.com.gpf.controller.Controller;
+import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.controller.DataEnum;
 import br.com.gpf.controller.RequestStatusEnum;
 import br.com.gpf.controller.ResponseData;
 import br.com.gpf.view.*;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.complete.FilterColumnEnum;
+import br.com.gpf.view.screen.complete.ScreenEnum;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +21,7 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static br.com.gpf.view.ConstValues.DATE_FORMAT;
-import static br.com.gpf.view.screen.FilterColumnEnum.*;
+import static br.com.gpf.view.screen.complete.FilterColumnEnum.*;
 
 public class TransactionHistoryScreen extends DefaultTemplateScreen {
 
@@ -64,7 +68,7 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
                 loadData1.getMapData().put(FilterColumnEnum.toEnum(selectedFilter).getDataEnum(), searchText);
 
                 SwingUtilities.invokeLater(() -> {
-                    GpfScreenManager instance = GpfScreenManager.getInstance();
+                    GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
                     instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), loadData1);
                 });
 
@@ -76,15 +80,15 @@ public class TransactionHistoryScreen extends DefaultTemplateScreen {
 
 
         clearSelectionButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
         }));
 
     }
 
     private void loadTransactions(LoadData loadData) {
-        ResponseData responseDataGetUserTransaction = Controller.getInstance().getTransactionService().getUserTransaction(Controller.getInstance().getSession().id());
-        ResponseData responseDataGetUserTransactionTypes = Controller.getInstance().getTransactionTypeService().getUserTypes(Controller.getInstance().getSession().id());
+        ResponseData responseDataGetUserTransaction = ServiceLocator.getInstance().getTransactionService().getUserTransaction(ServiceLocator.getInstance().getSession().id());
+        ResponseData responseDataGetUserTransactionTypes = ServiceLocator.getInstance().getTransactionTypeService().getUserTypes(ServiceLocator.getInstance().getSession().id());
 
         if (responseDataGetUserTransaction.getValue() == RequestStatusEnum.SUCCESS && responseDataGetUserTransactionTypes.getValue() == RequestStatusEnum.SUCCESS) {
             Vector<Vector<String>> data = new Vector<>();

@@ -1,7 +1,9 @@
 package br.com.gpf.view.screen;
 
-import br.com.gpf.controller.Controller;
-import br.com.gpf.view.GpfScreenManager;
+import br.com.gpf.controller.ServiceLocator;
+import br.com.gpf.controller.GpfScreenControllerManager;
+import br.com.gpf.view.screen.complete.Screen;
+import br.com.gpf.view.screen.complete.ScreenEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultHomeButton() {
         JButton homeButton = new JButton(ScreenEnum.HOME.getTitle());
         homeButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
         }));
         return homeButton;
@@ -31,7 +33,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultLoginButton() {
         JButton loginButton = new JButton(ScreenEnum.LOGIN.getTitle());
         loginButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
         }));
         return loginButton;
@@ -40,7 +42,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultNewAccountButton() {
         JButton newAccountButton = new JButton(ScreenEnum.NEW_ACCOUNT.getTitle());
         newAccountButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
         }));
         return newAccountButton;
@@ -49,7 +51,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultAddTransactionButton() {
         JButton addTransactionButton = new JButton(ScreenEnum.ADD_TRANSACTION.getTitle());
         addTransactionButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
         }));
         return addTransactionButton;
@@ -58,7 +60,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultTransactionHistoryButton() {
         JButton transactionHistoryButton = new JButton(ScreenEnum.TRANSACTION_HISTORY.getTitle());
         transactionHistoryButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_HISTORY), null);
         }));
         return transactionHistoryButton;
@@ -67,7 +69,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultTransactionTypesButton() {
         JButton transactionTypesButton = new JButton(ScreenEnum.TRANSACTION_TYPES.getTitle());
         transactionTypesButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_TYPES), null);
         }));
         return transactionTypesButton;
@@ -76,7 +78,7 @@ public abstract class DefaultTemplateScreen implements Screen {
     protected JButton defaultReportsButton() {
         JButton reportsButton = new JButton(ScreenEnum.REPORTS.getTitle());
         reportsButton.addActionListener(e -> SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.REPORTS), null);
         }));
         return reportsButton;
@@ -84,7 +86,7 @@ public abstract class DefaultTemplateScreen implements Screen {
 
     protected JLabel userNameLabel() {
         JLabel accountName = new JLabel();
-        accountName.setText("/ USUARIO " + Controller.getInstance().getSession().userName());
+        accountName.setText("/ USUARIO " + ServiceLocator.getInstance().getSession().userName());
         return accountName;
     }
 

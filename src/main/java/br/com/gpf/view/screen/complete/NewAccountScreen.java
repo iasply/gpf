@@ -1,17 +1,12 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view.screen.complete;
 
-import br.com.gpf.Util;
-import br.com.gpf.controller.Controller;
-import br.com.gpf.controller.DataEnum;
-import br.com.gpf.controller.RequestStatusEnum;
-import br.com.gpf.controller.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreenManager;
-import br.com.gpf.view.LoadData;
-import br.com.gpf.view.MessageDialogEnum;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class NewAccountScreen extends DefaultTemplateScreen {
 
@@ -41,54 +36,10 @@ public class NewAccountScreen extends DefaultTemplateScreen {
 
     @Override
     public void onload(LoadData loadData) {
-
-        register.addActionListener(e -> {
-            try {
-                onSave();
-            } catch (DefaultScreenException ex) {
-                MessageDialogEnum.ERROR.showMsg(ex.getMessage(), null);
-                return;
-            }
-
-            ResponseData responseData = Controller.getInstance().getAccountService().createAccount(userName.getText(), new String(password.getPassword()));
-            if (responseData.getValue() != RequestStatusEnum.SUCCESS) {
-                String msg = DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG));
-                MessageDialogEnum.ERROR.showMsg(msg, null);
-
-                SwingUtilities.invokeLater(() -> {
-                    GpfScreenManager instance = GpfScreenManager.getInstance();
-                    instance.changeScreen(instance.loadScreenPanel(ScreenEnum.NEW_ACCOUNT), null);
-                });
-                return;
-            }
-
-            MessageDialogEnum.SUCCESS.showMsg("USUÁRIO " + userName.getText() + " CRIADO", null);
-
-            SwingUtilities.invokeLater(() -> {
-                GpfScreenManager instance = GpfScreenManager.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.LOGIN), null);
-            });
-
-
-        });
-
     }
 
     @Override
     public void onSave() throws DefaultScreenException {
-        if (Util.isBlankNullOrEmpty(userName.getText()) ||
-                Util.isBlankNullOrEmpty(new String(password.getPassword()))
-                ||
-                Util.isBlankNullOrEmpty(new String(confirmPassword.getPassword()))
-        ) {
-            throw new DefaultScreenException("PREENCHA TODOS OS CAMPOS");
-        }
-
-        if (!new String(password.getPassword()).equals(new String(confirmPassword.getPassword()))) {
-            throw new DefaultScreenException("AS SENHAS DEVEM SER IGUAIS");
-        }
-
-
     }
 
     @Override
@@ -154,5 +105,21 @@ public class NewAccountScreen extends DefaultTemplateScreen {
         super.bottomPanel.add(super.defaultLoginButton());
 
         return this.bottomPanel;
+    }
+
+    public String getUserName() {
+        return userName.getText();
+    }
+
+    public String getPassword() {
+        return new String(password.getPassword());
+    }
+
+    public String getConfirmPassword() {
+        return new String(confirmPassword.getPassword());
+    }
+
+    public void setRegisterListener(ActionListener listener) {
+        register.addActionListener(listener);
     }
 }

@@ -1,20 +1,21 @@
 package br.com.gpf.view.screen;
 
+import br.com.gpf.controller.GpfScreenControllerManager;
 import br.com.gpf.model.entity.TransactionTypesModel;
-import br.com.gpf.controller.Controller;
+import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.controller.DataEnum;
 import br.com.gpf.controller.RequestStatusEnum;
 import br.com.gpf.controller.ResponseData;
-import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreenManager;
-import br.com.gpf.view.LoadData;
-import br.com.gpf.view.MessageDialogEnum;
+import br.com.gpf.view.*;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.complete.ScreenEnum;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
@@ -48,35 +49,23 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
 
     private static void reload() {
         SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
+            GpfScreenControllerManager instance = GpfScreenControllerManager.getInstance();
             instance.changeScreen(instance.loadScreenPanel(ScreenEnum.TRANSACTION_TYPES), null);
         });
     }
 
+   public String getNewTransactionTypeDescField() {
+        return newTransactionTypeDescField.getText();
+    }
+    public void setRegisterTransactionTypeButtonListanner(ActionListener listener) {
+        registerTransactionTypeButton.addActionListener(listener);
+    }
+
     @Override
     public void onload(LoadData loadData) {
-        accountNameLabel.setText("Conta: " + Controller.getInstance().getSession().userName());
+        accountNameLabel.setText("Conta: " + ServiceLocator.getInstance().getSession().userName());
 
         loadTransactionTypes();
-
-        registerTransactionTypeButton.addActionListener(e -> {
-            String newDesc = newTransactionTypeDescField.getText();
-            if (newDesc.isEmpty()) {
-                MessageDialogEnum.ERROR.showMsg("Por favor, forneça uma descrição para o novo tipo de transação.", null);
-                return;
-            }
-
-            ResponseData responseData = Controller.getInstance().getTransactionTypeService().createType(
-                    Controller.getInstance().getSession().id(), newDesc);
-
-            if (responseData.getValue() == RequestStatusEnum.SUCCESS) {
-                reload();
-                return;
-            }
-
-            MessageDialogEnum.ERROR.showMsg("Falha ao adicionar o tipo de transação: " + responseData.getMapData().get(DataEnum.ERROR_MSG), null);
-        });
-
 
     }
 
@@ -148,57 +137,43 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
         return super.bottomPanel;
 
     }
+    public void loadTransactionTypes( List<TransactionTypesModel> transactionTypes){
+        Vector<Vector<String>> data = new Vector<>();
+        Vector<String> columnNames = new Vector<>();
+        columnNames.add("ID");
+        columnNames.add("TIPO");
+        columnNames.add("EDITAR");
+        columnNames.add("EXCLUIR");
 
-    private void loadTransactionTypes() {
-        ResponseData responseData = Controller.getInstance().getTransactionTypeService().getUserTypes(
-                Controller.getInstance().getSession().id());
-
-
-        if (responseData.getValue() == RequestStatusEnum.SUCCESS) {
-            Vector<Vector<String>> data = new Vector<>();
-            Vector<String> columnNames = new Vector<>();
-            columnNames.add("ID");
-            columnNames.add("TIPO");
-            columnNames.add("EDITAR");
-            columnNames.add("EXCLUIR");
-            List<TransactionTypesModel> transactionTypes = DataEnum.decodeTransactionTypes(DataEnum.USER_TYPES, responseData.getMapData().get(DataEnum.USER_TYPES));
-
-            for (TransactionTypesModel t : transactionTypes) {
-                Vector<String> row = new Vector<>();
-                row.add(t.getId().toString());
-                row.add(t.getDesc());
-                row.add("");
-                row.add("");
-                data.add(row);
-            }
-
-            DefaultTableModel model = new DefaultTableModel(data, columnNames) {
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    return column == 3 || column == 2;
-                }
-            };
-
-            this.table = new JTable(model);
-            if (!transactionTypes.isEmpty()) {
-                addButtonToColumn(table, 2, "EDITAR");
-                addButtonToColumn(table, 3, "EXCLUIR");
-
-                table.getColumnModel().getColumn(0).setMinWidth(0);
-                table.getColumnModel().getColumn(0).setMaxWidth(0);
-                table.getColumnModel().getColumn(0).setWidth(0);
-                table.getColumnModel().getColumn(0).setPreferredWidth(0);
-            }
-            return;
-
+        for (TransactionTypesModel t : transactionTypes) {
+            Vector<String> row = new Vector<>();
+            row.add(t.getId().toString());
+            row.add(t.getDesc());
+            row.add("");
+            row.add("");
+            data.add(row);
         }
 
-        MessageDialogEnum.ERROR.showMsg("Falha ao carregar os tipos de transação: " + DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG)), null);
-        SwingUtilities.invokeLater(() -> {
-            GpfScreenManager instance = GpfScreenManager.getInstance();
-            instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
-        });
+
+        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 3 || column == 2;
+            }
+        };
+
+        this.table = new JTable(model);
+        if (!transactionTypes.isEmpty()) {
+            addButtonToColumn(table, 2, "EDITAR");
+            addButtonToColumn(table, 3, "EXCLUIR");
+
+            table.getColumnModel().getColumn(0).setMinWidth(0);
+            table.getColumnModel().getColumn(0).setMaxWidth(0);
+            table.getColumnModel().getColumn(0).setWidth(0);
+            table.getColumnModel().getColumn(0).setPreferredWidth(0);
+        }
     }
+
 
     static class ButtonRenderer extends JButton implements TableCellRenderer {
 
@@ -248,7 +223,7 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
                 String userInput = JOptionPane.showInputDialog(null, "Por favor, insira a nova descrição do tipo:", "Entrada Necessária", JOptionPane.QUESTION_MESSAGE);
 
                 if (userInput != null && !userInput.isEmpty()) {
-                    Controller.getInstance().getTransactionTypeService().alterType(Controller.getInstance().getSession().id(), Integer.parseInt(id), userInput);
+                    ServiceLocator.getInstance().getTransactionTypeService().alterType(ServiceLocator.getInstance().getSession().id(), Integer.parseInt(id), userInput);
                     reload();
                 } else {
                     MessageDialogEnum.ERROR.showMsg("Entrada inválida ou operação cancelada", null);
@@ -261,8 +236,8 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
             boolean isConfirmed = MessageDialogEnum.YES_OR_NOT.showMsg("Você tem certeza que deseja excluir " + desc + "?", table);
 
             if (isConfirmed) {
-                ResponseData availableTransactionTypes = Controller.getInstance().getTransactionTypeService()
-                        .getUserTypes(Controller.getInstance().getSession().id());
+                ResponseData availableTransactionTypes = ServiceLocator.getInstance().getTransactionTypeService()
+                        .getUserTypes(ServiceLocator.getInstance().getSession().id());
                 List<TransactionTypesModel> transactionTypes = DataEnum.decodeTransactionTypes(DataEnum.USER_TYPES, availableTransactionTypes.getMapData().get(DataEnum.USER_TYPES));
 
                 if (transactionTypes != null && !transactionTypes.isEmpty()) {
@@ -297,13 +272,13 @@ public class TransactionTypesScreen extends DefaultTemplateScreen {
             TransactionTypesModel newType = findTransactionTypeByDesc(transactionTypes, selectedTypeName);
 
             if (newType != null && oldType != null) {
-                Controller.getInstance().getTransactionService().alterTransactionType(
-                        Controller.getInstance().getSession().id(),
+                ServiceLocator.getInstance().getTransactionService().alterTransactionType(
+                        ServiceLocator.getInstance().getSession().id(),
                         oldType.getId(),
                         newType.getId()
                 );
-                Controller.getInstance().getTransactionTypeService()
-                        .deleteType(Controller.getInstance().getSession().id(), oldType.getId());
+                ServiceLocator.getInstance().getTransactionTypeService()
+                        .deleteType(ServiceLocator.getInstance().getSession().id(), oldType.getId());
                 reload();
             }
         }

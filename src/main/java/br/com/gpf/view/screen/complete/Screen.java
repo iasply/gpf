@@ -1,7 +1,7 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view.screen.complete;
 
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.LoadData;
+import br.com.gpf.view.data.LoadData;
 
 import javax.swing.*;
 

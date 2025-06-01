@@ -1,17 +1,13 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view.screen.complete;
 
 import br.com.gpf.model.entity.TransactionTypesModel;
-import br.com.gpf.controller.Controller;
-import br.com.gpf.controller.DataEnum;
-import br.com.gpf.controller.RequestStatusEnum;
-import br.com.gpf.controller.ResponseData;
-import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.GpfScreenManager;
-import br.com.gpf.view.LoadData;
-import br.com.gpf.view.MessageDialogEnum;
+import br.com.gpf.view.*;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 
@@ -72,67 +68,40 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
     @Override
     public void onload(LoadData loadData) {
 
-        ResponseData userTypesResponseData = Controller.getInstance().getTransactionTypeService().getUserTypes(Controller.getInstance().getSession().id());
-        if (userTypesResponseData.getValue() != RequestStatusEnum.SUCCESS) {
-            MessageDialogEnum.ERROR.showMsg(DataEnum.decodeString(DataEnum.ERROR_MSG, userTypesResponseData.getMapData().get(DataEnum.ERROR_MSG)), null);
-            SwingUtilities.invokeLater(() -> {
-                GpfScreenManager instance = GpfScreenManager.getInstance();
-                instance.changeScreen(instance.loadScreenPanel(ScreenEnum.HOME), null);
-            });
-            return;
-        }
-        List<TransactionTypesModel> transactionTypes = DataEnum.decodeTransactionTypes(DataEnum.USER_TYPES, userTypesResponseData.getMapData().get(DataEnum.USER_TYPES));
 
+
+    }
+
+    public String getValueText() {
+        return valueField.getText();
+    }
+    public String getDescriptionText() {
+        return descriptionField.getText();
+    }
+    public Date getSelectedDate() {
+        return (Date) dateSpinner.getValue();
+    }
+    public TransactionTypesModel getTransactionType() {
+        return (TransactionTypesModel) typeComboBox.getSelectedItem();
+    }
+    public boolean isIncome() {
+        return incomeRadioButton.isSelected();
+    }
+    public boolean isExpense() {
+        return expenseRadioButton.isSelected();
+    }
+    public void setSaveButtonListener(ActionListener listener) {
+        saveButton.addActionListener(listener);
+    }
+
+    public void loadTransactionType(   List<TransactionTypesModel>  transactionTypes) {
         TransactionTypesModel[] transactionTypesArray = transactionTypes.toArray(new TransactionTypesModel[0]);
-
         this.typeComboBox = new JComboBox<>(transactionTypesArray);
-
-        saveButton.addActionListener(e -> {
-            try {
-                onSave();
-                Integer transactionCategory = incomeRadioButton.isSelected() ? CONST_INCOME : CONST_EXPENSE;
-                String valueText = valueField.getText();
-                String descriptionText = descriptionField.getText().trim();
-                Date selectedDate = (Date) dateSpinner.getValue();
-                TransactionTypesModel transactionType = (TransactionTypesModel) typeComboBox.getSelectedItem();
-                Double value = Double.parseDouble(valueText);
-                ResponseData responseData = Controller.getInstance().getTransactionService().createTransaction(
-                        value, transactionCategory, transactionType.getId(), selectedDate, descriptionText, Controller.getInstance().getSession().id());
-
-                if (responseData.getValue() == RequestStatusEnum.SUCCESS) {
-                    MessageDialogEnum.SUCCESS.showMsg("Transação salva com sucesso!", null);
-                    SwingUtilities.invokeLater(() -> {
-                        GpfScreenManager instance = GpfScreenManager.getInstance();
-                        instance.changeScreen(instance.loadScreenPanel(ScreenEnum.ADD_TRANSACTION), null);
-                    });
-                    return;
-                }
-
-                MessageDialogEnum.ERROR.showMsg("Falha ao salvar a transação: " + DataEnum.decodeString(DataEnum.ERROR_MSG, responseData.getMapData().get(DataEnum.ERROR_MSG)), null);
-            } catch (DefaultScreenException ex) {
-                MessageDialogEnum.ERROR.showMsg(ex.getMessage(), null);
-            }
-
-        });
-
     }
 
     @Override
     public void onSave() throws DefaultScreenException {
-        String valueText = valueField.getText();
-        String descriptionText = descriptionField.getText();
-        Date selectedDate = (Date) dateSpinner.getValue();
-        TransactionTypesModel transactionType = (TransactionTypesModel) typeComboBox.getSelectedItem();
 
-        if (valueText.isEmpty() || selectedDate == null || transactionType == null || (!incomeRadioButton.isSelected() && !expenseRadioButton.isSelected())) {
-            throw new DefaultScreenException("Por favor, preencha todos os campos obrigatórios.");
-        }
-
-        try {
-            Double.parseDouble(valueText);
-        } catch (NumberFormatException ex) {
-            throw new DefaultScreenException("Valor inválido. Por favor, insira um valor numérico.");
-        }
     }
 
     @Override
@@ -213,5 +182,11 @@ public class TransactionAddScreen extends DefaultTemplateScreen {
 
         return super.bottomPanel;
     }
+
+
+
+
+
+
 
 }

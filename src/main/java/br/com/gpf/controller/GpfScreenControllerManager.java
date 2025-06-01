@@ -1,24 +1,31 @@
-package br.com.gpf.view;
+package br.com.gpf.controller;
 
+import br.com.gpf.controller.screenController.HomeScreenController;
+import br.com.gpf.controller.screenController.LoginScreenController;
+import br.com.gpf.controller.screenController.NewAccountScreenController;
+import br.com.gpf.controller.screenController.TransactionAddScreenController;
+import br.com.gpf.controller.screenController.TransactionTypesScreenController;
+import br.com.gpf.view.data.LoadData;
 import br.com.gpf.view.screen.*;
+import br.com.gpf.view.screen.complete.ReportScreen;
+import br.com.gpf.view.screen.complete.Screen;
+import br.com.gpf.view.screen.complete.ScreenEnum;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-public class GpfScreenManager extends JFrame {
+public class GpfScreenControllerManager extends JFrame {
     private static final String FRAME_TITLE = "Gerenciador Pessoal de Finanças";
     private static final Integer FRAME_WIDTH = 900;
     private static final Integer FRAME_HEIGHT = 600;
-    private static GpfScreenManager instance;
+    private static GpfScreenControllerManager instance;
     private JPanel topPanel;
     private JPanel midPanel;
     private JPanel bottomPanel;
     private GridBagConstraints gbc;
 
 
-    private GpfScreenManager() {
+    private GpfScreenControllerManager() {
         setTitle(FRAME_TITLE);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -28,9 +35,9 @@ public class GpfScreenManager extends JFrame {
         setResizable(false);
     }
 
-    public static GpfScreenManager getInstance() {
+    public static GpfScreenControllerManager getInstance() {
         if (instance == null) {
-            instance = new GpfScreenManager();
+            instance = new GpfScreenControllerManager();
         }
         return instance;
     }
@@ -98,19 +105,19 @@ public class GpfScreenManager extends JFrame {
     public Screen loadScreenPanel(ScreenEnum screenEnum) {
         switch (screenEnum) {
             case ScreenEnum.LOGIN -> {
-                return new LoginScreen();
+                return new LoginScreenController().getScreen();
             }
             case ScreenEnum.NEW_ACCOUNT -> {
-                return new NewAccountScreen();
+                return new NewAccountScreenController().getScreen();
             }
             case ScreenEnum.HOME -> {
-                return new HomeScreen();
+                return new HomeScreenController().getScreen();
             }
             case ScreenEnum.TRANSACTION_TYPES -> {
-                return new TransactionTypesScreen();
+                return new TransactionTypesScreenController().getScreen();
             }
             case ScreenEnum.ADD_TRANSACTION -> {
-                return new TransactionAddScreen();
+                return new  TransactionAddScreenController().getScreen();
             }
             case TRANSACTION_HISTORY -> {
                 return new TransactionHistoryScreen();

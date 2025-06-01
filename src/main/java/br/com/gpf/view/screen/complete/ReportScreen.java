@@ -1,13 +1,14 @@
-package br.com.gpf.view.screen;
+package br.com.gpf.view.screen.complete;
 
 import br.com.gpf.model.entity.TransactionModel;
 import br.com.gpf.model.entity.TransactionTypesModel;
-import br.com.gpf.controller.Controller;
+import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.controller.DataEnum;
 import br.com.gpf.controller.RequestStatusEnum;
 import br.com.gpf.controller.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.LoadData;
+import br.com.gpf.view.data.LoadData;
+import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -146,10 +147,10 @@ public class ReportScreen extends DefaultTemplateScreen {
             return;
         }
 
-        ResponseData responseDataTransaction = Controller.getInstance().getTransactionService().getUserTransaction(
-                Controller.getInstance().getSession().id());
-        ResponseData responseDataTransactionType = Controller.getInstance().getTransactionTypeService().getUserTypes(
-                Controller.getInstance().getSession().id());
+        ResponseData responseDataTransaction = ServiceLocator.getInstance().getTransactionService().getUserTransaction(
+                ServiceLocator.getInstance().getSession().id());
+        ResponseData responseDataTransactionType = ServiceLocator.getInstance().getTransactionTypeService().getUserTypes(
+                ServiceLocator.getInstance().getSession().id());
 
         if (responseDataTransaction.getValue() == RequestStatusEnum.SUCCESS &&
                 responseDataTransactionType.getValue() == RequestStatusEnum.SUCCESS) {
