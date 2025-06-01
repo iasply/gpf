@@ -1,6 +1,9 @@
-package br.com.gpf.service;
+package br.com.gpf.controller;
 
-import br.com.gpf.service.impl.*;
+import br.com.gpf.controller.impl.*;
+import br.com.gpf.controller.service.AccountService;
+import br.com.gpf.controller.service.TransactionService;
+import br.com.gpf.controller.service.TransactionTypeService;
 
 public class Controller {
 

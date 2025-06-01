@@ -1,6 +1,7 @@
-package br.com.gpf.repository.dao;
+package br.com.gpf.model.impl;
 
-import br.com.gpf.repository.model.UserModel;
+import br.com.gpf.model.dao.UserDao;
+import br.com.gpf.model.entity.UserModel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;

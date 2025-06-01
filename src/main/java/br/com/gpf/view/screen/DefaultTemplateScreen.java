@@ -1,6 +1,6 @@
 package br.com.gpf.view.screen;
 
-import br.com.gpf.service.Controller;
+import br.com.gpf.controller.Controller;
 import br.com.gpf.view.GpfScreenManager;
 
 import javax.swing.*;

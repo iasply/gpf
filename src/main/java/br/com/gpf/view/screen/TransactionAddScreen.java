@@ -1,10 +1,10 @@
 package br.com.gpf.view.screen;
 
-import br.com.gpf.repository.model.TransactionTypesModel;
-import br.com.gpf.service.Controller;
-import br.com.gpf.service.DataEnum;
-import br.com.gpf.service.RequestStatusEnum;
-import br.com.gpf.service.ResponseData;
+import br.com.gpf.model.entity.TransactionTypesModel;
+import br.com.gpf.controller.Controller;
+import br.com.gpf.controller.DataEnum;
+import br.com.gpf.controller.RequestStatusEnum;
+import br.com.gpf.controller.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
 import br.com.gpf.view.GpfScreenManager;
 import br.com.gpf.view.LoadData;

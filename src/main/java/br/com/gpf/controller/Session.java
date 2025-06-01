@@ -1,4 +1,4 @@
-package br.com.gpf.service;
+package br.com.gpf.controller;
 
 public record Session(Integer id, String userName) {
 }

@@ -1,8 +1,8 @@
-package br.com.gpf.repository.dao;
+package br.com.gpf.model.impl;
 
-import br.com.gpf.repository.DefaultRepositoryException;
-import br.com.gpf.repository.model.TransactionTypesModel;
-import br.com.gpf.repository.model.UserModel;
+import br.com.gpf.model.DefaultRepositoryException;
+import br.com.gpf.model.dao.TransactionTypesDao;
+import br.com.gpf.model.entity.TransactionTypesModel;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

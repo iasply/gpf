@@ -1,4 +1,4 @@
-package br.com.gpf.repository.model;
+package br.com.gpf.model.entity;
 
 
 import jakarta.persistence.*;

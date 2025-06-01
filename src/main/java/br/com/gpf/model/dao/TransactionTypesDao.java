@@ -1,7 +1,7 @@
-package br.com.gpf.repository.dao;
+package br.com.gpf.model.dao;
 
-import br.com.gpf.repository.DefaultRepositoryException;
-import br.com.gpf.repository.model.TransactionTypesModel;
+import br.com.gpf.model.DefaultRepositoryException;
+import br.com.gpf.model.entity.TransactionTypesModel;
 
 import java.util.List;
 

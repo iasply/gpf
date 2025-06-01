@@ -1,6 +1,6 @@
-package br.com.gpf.repository.dao;
+package br.com.gpf.model.dao;
 
-import br.com.gpf.repository.model.UserModel;
+import br.com.gpf.model.entity.UserModel;
 
 public interface UserDao {
     boolean isValidUser(String userName, String password);

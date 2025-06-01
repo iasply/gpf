@@ -5,8 +5,8 @@
         <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
-        <mapping class="br.com.gpf.repository.model.UserModel"/>
-        <mapping class="br.com.gpf.repository.model.TransactionModel"/>
-        <mapping class="br.com.gpf.repository.model.TransactionTypesModel"/>
+        <mapping class="br.com.gpf.model.entity.UserModel"/>
+        <mapping class="br.com.gpf.model.entity.TransactionModel"/>
+        <mapping class="br.com.gpf.model.entity.TransactionTypesModel"/>
     </session-factory>
 </hibernate-configuration>

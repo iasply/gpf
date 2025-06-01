@@ -1,4 +1,4 @@
-package br.com.gpf.service;
+package br.com.gpf.controller;
 
 public enum RequestStatusEnum {
     DEFAULT,

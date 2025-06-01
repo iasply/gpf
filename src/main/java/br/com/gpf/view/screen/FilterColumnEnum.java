@@ -1,6 +1,6 @@
 package br.com.gpf.view.screen;
 
-import br.com.gpf.service.DataEnum;
+import br.com.gpf.controller.DataEnum;
 
 public enum FilterColumnEnum {
 

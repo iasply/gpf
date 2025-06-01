@@ -1,4 +1,4 @@
-package br.com.gpf.service;
+package br.com.gpf.controller;
 
 import java.util.HashMap;
 import java.util.Map;

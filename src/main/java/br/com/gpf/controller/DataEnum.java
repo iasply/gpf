@@ -1,7 +1,7 @@
-package br.com.gpf.service;
+package br.com.gpf.controller;
 
-import br.com.gpf.repository.model.TransactionModel;
-import br.com.gpf.repository.model.TransactionTypesModel;
+import br.com.gpf.model.entity.TransactionModel;
+import br.com.gpf.model.entity.TransactionTypesModel;
 
 import java.util.List;
 import java.util.Objects;

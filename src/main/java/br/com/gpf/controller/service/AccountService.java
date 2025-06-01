@@ -1,6 +1,6 @@
-package br.com.gpf.service.impl;
+package br.com.gpf.controller.service;
 
-import br.com.gpf.service.ResponseData;
+import br.com.gpf.controller.ResponseData;
 
 public interface AccountService {
 
