@@ -2,9 +2,9 @@ package br.com.gpf.controller.screenController;
 
 import br.com.gpf.controller.GpfScreenControllerManager;
 import br.com.gpf.controller.ServiceLocator;
-import br.com.gpf.view.screen.complete.HomeScreen;
-import br.com.gpf.view.screen.complete.Screen;
-import br.com.gpf.view.screen.complete.ScreenEnum;
+import br.com.gpf.view.screen.HomeScreen;
+import br.com.gpf.view.screen.Screen;
+import br.com.gpf.view.screen.ScreenEnum;
 
 import javax.swing.*;
 

@@ -9,9 +9,9 @@ import br.com.gpf.model.dao.UserDao;
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.model.entity.UserModel;
 import br.com.gpf.view.MessageDialogEnum;
-import br.com.gpf.view.screen.complete.TransactionTypesScreen;
-import br.com.gpf.view.screen.complete.Screen;
-import br.com.gpf.view.screen.complete.ScreenEnum;
+import br.com.gpf.view.screen.TransactionTypesScreen;
+import br.com.gpf.view.screen.Screen;
+import br.com.gpf.view.screen.ScreenEnum;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -130,6 +130,11 @@ public class TransactionTypesScreenController implements ScreenController {
             List<TransactionTypesModel> transactionTypes = transactionTypesDao.getUserTypes(ServiceLocator.getInstance().getSession().id());
             if (transactionTypes != null && !transactionTypes.isEmpty()) {
 
+                if (transactionTypes.size() == 1) {
+                    MessageDialogEnum.ERROR.showMsg("Não é possivel excluir o seu unico tipo de transação existente",null);
+                    return;
+                }
+
                 Vector<String> transactionTypeNames = getAvailableTransactionTypes(desc, transactionTypes);
                 JComboBox<String> typeSelectionComboBox = new JComboBox<>(transactionTypeNames);
 
@@ -138,11 +143,11 @@ public class TransactionTypesScreenController implements ScreenController {
                 if (result == JOptionPane.OK_OPTION) {
                     String selectedTypeName = (String) typeSelectionComboBox.getSelectedItem();
                     moveTransactionsAndDeleteType(desc, selectedTypeName, transactionTypes);
-                    reloadScreen();
 
                 }
             }
         }
+        reloadScreen();
     }
 
 
@@ -159,10 +164,8 @@ public class TransactionTypesScreenController implements ScreenController {
 
         if (newType != null && oldType != null) {
             transactionDao.alterTransactionType(ServiceLocator.getInstance().getSession().id(), oldType.getId(), newType.getId()
-
             );
             transactionTypesDao.deleteType(ServiceLocator.getInstance().getSession().id(), oldType.getId());
-            reloadScreen();
         }
     }
 

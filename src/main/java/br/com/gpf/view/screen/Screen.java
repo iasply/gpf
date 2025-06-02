@@ -1,4 +1,4 @@
-package br.com.gpf.view.screen.complete;
+package br.com.gpf.view.screen;
 
 import br.com.gpf.view.DefaultScreenException;
 import br.com.gpf.view.data.LoadData;

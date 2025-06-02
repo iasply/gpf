@@ -7,9 +7,9 @@ import br.com.gpf.model.dao.UserDao;
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.model.entity.UserModel;
 import br.com.gpf.view.MessageDialogEnum;
-import br.com.gpf.view.screen.complete.NewAccountScreen;
-import br.com.gpf.view.screen.complete.Screen;
-import br.com.gpf.view.screen.complete.ScreenEnum;
+import br.com.gpf.view.screen.NewAccountScreen;
+import br.com.gpf.view.screen.Screen;
+import br.com.gpf.view.screen.ScreenEnum;
 
 import javax.swing.*;
 

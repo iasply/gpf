@@ -9,9 +9,9 @@ import br.com.gpf.view.DefaultScreenException;
 import br.com.gpf.view.MessageDialogEnum;
 import br.com.gpf.view.data.LoadData;
 import br.com.gpf.view.screen.TransactionHistoryScreen;
-import br.com.gpf.view.screen.complete.FilterColumnEnum;
-import br.com.gpf.view.screen.complete.Screen;
-import br.com.gpf.view.screen.complete.ScreenEnum;
+import br.com.gpf.view.screen.FilterColumnEnum;
+import br.com.gpf.view.screen.Screen;
+import br.com.gpf.view.screen.ScreenEnum;
 
 import javax.swing.*;
 

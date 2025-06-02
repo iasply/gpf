@@ -1,9 +1,8 @@
-package br.com.gpf.view.screen.complete;
+package br.com.gpf.view.screen;
 
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.view.*;
 import br.com.gpf.view.data.LoadData;
-import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import java.awt.*;

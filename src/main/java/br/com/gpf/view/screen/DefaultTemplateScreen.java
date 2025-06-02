@@ -2,8 +2,6 @@ package br.com.gpf.view.screen;
 
 import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.controller.GpfScreenControllerManager;
-import br.com.gpf.view.screen.complete.Screen;
-import br.com.gpf.view.screen.complete.ScreenEnum;
 
 import javax.swing.*;
 import java.awt.*;

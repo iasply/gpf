@@ -7,8 +7,8 @@ import br.com.gpf.model.dao.UserDao;
 import br.com.gpf.model.entity.TransactionModel;
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.view.MessageDialogEnum;
-import br.com.gpf.view.screen.complete.ReportScreen;
-import br.com.gpf.view.screen.complete.Screen;
+import br.com.gpf.view.screen.ReportScreen;
+import br.com.gpf.view.screen.Screen;
 
 import java.awt.event.ActionEvent;
 import java.text.ParseException;

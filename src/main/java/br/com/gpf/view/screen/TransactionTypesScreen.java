@@ -1,8 +1,7 @@
-package br.com.gpf.view.screen.complete;
+package br.com.gpf.view.screen;
 
 import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.view.data.LoadData;
-import br.com.gpf.view.screen.DefaultTemplateScreen;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

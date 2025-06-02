@@ -1,18 +1,11 @@
 package br.com.gpf.view.screen;
 
 import br.com.gpf.controller.DataEnum;
-import br.com.gpf.controller.GpfScreenControllerManager;
-import br.com.gpf.controller.RequestStatusEnum;
-import br.com.gpf.controller.ResponseData;
-import br.com.gpf.controller.ServiceLocator;
 import br.com.gpf.model.entity.TransactionModel;
 import br.com.gpf.model.entity.TransactionTypesModel;
 import br.com.gpf.view.ConstValues;
 import br.com.gpf.view.DefaultScreenException;
-import br.com.gpf.view.MessageDialogEnum;
 import br.com.gpf.view.data.LoadData;
-import br.com.gpf.view.screen.complete.FilterColumnEnum;
-import br.com.gpf.view.screen.complete.ScreenEnum;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +17,7 @@ import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static br.com.gpf.view.ConstValues.DATE_FORMAT;
-import static br.com.gpf.view.screen.complete.FilterColumnEnum.*;
+import static br.com.gpf.view.screen.FilterColumnEnum.*;
 
 public class TransactionHistoryScreen extends DefaultTemplateScreen {
 

@@ -8,9 +8,8 @@ import br.com.gpf.controller.screenController.TransactionAddScreenController;
 import br.com.gpf.controller.screenController.TransactionHistoryScreenController;
 import br.com.gpf.controller.screenController.TransactionTypesScreenController;
 import br.com.gpf.view.data.LoadData;
-import br.com.gpf.view.screen.*;
-import br.com.gpf.view.screen.complete.Screen;
-import br.com.gpf.view.screen.complete.ScreenEnum;
+import br.com.gpf.view.screen.Screen;
+import br.com.gpf.view.screen.ScreenEnum;
 
 import javax.swing.*;
 import java.awt.*;
