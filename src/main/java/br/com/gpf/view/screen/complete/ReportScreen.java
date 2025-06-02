@@ -13,6 +13,7 @@ import br.com.gpf.view.screen.DefaultTemplateScreen;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,10 +56,7 @@ public class ReportScreen extends DefaultTemplateScreen {
 
     @Override
     public void onload(LoadData loadData) {
-        generateReportButton.addActionListener(e -> generateReport());
-        last1MonthButton.addActionListener(e -> setDateRange(-1));
-        last3MonthsButton.addActionListener(e -> setDateRange(-3));
-        last6MonthsButton.addActionListener(e -> setDateRange(-6));
+
     }
 
     @Override
@@ -132,6 +130,61 @@ public class ReportScreen extends DefaultTemplateScreen {
 
         return midPanel;
     }
+
+    public void setGenerateReportButtonListener(ActionListener listener) {
+        generateReportButton.addActionListener(listener);
+    }
+
+    public void setLast1MonthButtonListener(ActionListener listener) {
+        last1MonthButton.addActionListener(listener);
+    }
+
+    public void setLast3MonthsButtonListener(ActionListener listener) {
+        last3MonthsButton.addActionListener(listener);
+    }
+
+    public void setLast6MonthsButtonListener(ActionListener listener) {
+        last6MonthsButton.addActionListener(listener);
+    }
+
+
+    public String getStartDateFieldText() {
+        return startDateField.getText();
+    }
+
+    public void setStartDateFieldText(String text) {
+        startDateField.setText(text);
+    }
+
+    public String getEndDateFieldText() {
+        return endDateField.getText();
+    }
+
+
+    public void setEndDateFieldText(String text) {
+        endDateField.setText(text);
+    }
+
+    public void setTotalBalanceLabel(String text) {
+        totalBalanceLabel.setText(LABEL_TOTAL_BALANCE + text);
+    }
+
+    public void setTotalIncomeLabel(String text) {
+        totalIncomeLabel.setText(LABEL_TOTAL_INCOME + text);
+    }
+
+    public void setTotalExpensesLabel(String text) {
+        totalExpensesLabel.setText(LABEL_TOTAL_EXPENSES + text);
+    }
+
+    public void setIncomeCategoriesLabel(String text) {
+        incomeCategoriesLabel.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+    }
+
+    public void setExpensesCategoriesLabel(String text) {
+        expensesCategoriesLabel.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
+    }
+
 
     private void generateReport() {
         String startDate = startDateField.getText();

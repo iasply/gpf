@@ -3,11 +3,12 @@ package br.com.gpf.controller;
 import br.com.gpf.controller.screenController.HomeScreenController;
 import br.com.gpf.controller.screenController.LoginScreenController;
 import br.com.gpf.controller.screenController.NewAccountScreenController;
+import br.com.gpf.controller.screenController.ReportScreenController;
 import br.com.gpf.controller.screenController.TransactionAddScreenController;
+import br.com.gpf.controller.screenController.TransactionHistoryScreenController;
 import br.com.gpf.controller.screenController.TransactionTypesScreenController;
 import br.com.gpf.view.data.LoadData;
 import br.com.gpf.view.screen.*;
-import br.com.gpf.view.screen.complete.ReportScreen;
 import br.com.gpf.view.screen.complete.Screen;
 import br.com.gpf.view.screen.complete.ScreenEnum;
 
@@ -66,11 +67,7 @@ public class GpfScreenControllerManager extends JFrame {
 
         UIManager.put("Button.background", new Color(0, 123, 255));
 
-        UIManager.put("Button.border", BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(0, 102, 204), 2),
-                BorderFactory.createEmptyBorder(10, 20, 10, 20)
-        ));
-
+        UIManager.put("Button.border", BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 2), BorderFactory.createEmptyBorder(10, 20, 10, 20)));
 
 
         setLayout(new GridBagLayout());
@@ -117,13 +114,13 @@ public class GpfScreenControllerManager extends JFrame {
                 return new TransactionTypesScreenController().getScreen();
             }
             case ScreenEnum.ADD_TRANSACTION -> {
-                return new  TransactionAddScreenController().getScreen();
+                return new TransactionAddScreenController().getScreen();
             }
             case TRANSACTION_HISTORY -> {
-                return new TransactionHistoryScreen();
+                return new TransactionHistoryScreenController().getScreen();
             }
             case REPORTS -> {
-                return new ReportScreen();
+                return new ReportScreenController().getScreen();
             }
         }
         return null;
