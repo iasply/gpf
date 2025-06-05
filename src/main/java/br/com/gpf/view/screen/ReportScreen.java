@@ -1,11 +1,5 @@
 package br.com.gpf.view.screen;
 
-import br.com.gpf.model.entity.TransactionModel;
-import br.com.gpf.model.entity.TransactionTypesModel;
-import br.com.gpf.controller.ServiceLocator;
-import br.com.gpf.controller.DataEnum;
-import br.com.gpf.controller.RequestStatusEnum;
-import br.com.gpf.controller.ResponseData;
 import br.com.gpf.view.DefaultScreenException;
 import br.com.gpf.view.data.LoadData;
 
@@ -16,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static br.com.gpf.view.ConstValues.*;
 
@@ -184,82 +175,6 @@ public class ReportScreen extends DefaultTemplateScreen {
         expensesCategoriesLabel.setText("<html>" + text.replaceAll("\n", "<br/>") + "</html>");
     }
 
-
-    private void generateReport() {
-        String startDate = startDateField.getText();
-        String endDate = endDateField.getText();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
-        Date start, end;
-        try {
-            start = getStartDate(dateFormat.parse(startDate));
-            end = getEndDate(dateFormat.parse(endDate));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Formato de data inválido. Por favor, use o formato " + DATE_FORMAT);
-            return;
-        }
-
-        ResponseData responseDataTransaction = ServiceLocator.getInstance().getTransactionService().getUserTransaction(
-                ServiceLocator.getInstance().getSession().id());
-        ResponseData responseDataTransactionType = ServiceLocator.getInstance().getTransactionTypeService().getUserTypes(
-                ServiceLocator.getInstance().getSession().id());
-
-        if (responseDataTransaction.getValue() == RequestStatusEnum.SUCCESS &&
-                responseDataTransactionType.getValue() == RequestStatusEnum.SUCCESS) {
-
-            List<TransactionModel> transactions = DataEnum.decodeTransactionModel(DataEnum.USER_TRANSACTIONS,
-                    responseDataTransaction.getMapData().get(DataEnum.USER_TRANSACTIONS));
-            List<TransactionTypesModel> transactionTypes = DataEnum.decodeTransactionTypes(DataEnum.USER_TYPES,
-                    responseDataTransactionType.getMapData().get(DataEnum.USER_TYPES));
-
-            Map<Integer, Long> incomeTypeCount = transactions.stream()
-                    .filter(transaction -> transaction.getTransactionClassification().equals(CONST_INCOME) &&
-                            !transaction.getDate().before(start) && !transaction.getDate().after(end))
-                    .collect(Collectors.groupingBy(transaction -> transaction.getTransactionType().getId(),Collectors.counting()));
-
-            Map<Integer, Long> expenseTypeCount = transactions.stream()
-                    .filter(transaction -> transaction.getTransactionClassification().equals(CONST_EXPENSE) &&
-                            !transaction.getDate().before(start) && !transaction.getDate().after(end))
-                    .collect(Collectors.groupingBy(
-                            transaction -> transaction.getTransactionType().getId(),
-                            Collectors.counting()));
-
-
-            double totalIncome = transactions.stream()
-                    .filter(transaction -> transaction.getTransactionClassification().equals(CONST_INCOME) &&
-                            !transaction.getDate().before(start) && !transaction.getDate().after(end))
-                    .mapToDouble(TransactionModel::getValue)
-                    .sum();
-
-            double totalExpenses = transactions.stream()
-                    .filter(transaction -> transaction.getTransactionClassification().equals(CONST_EXPENSE) &&
-                            !transaction.getDate().before(start) && !transaction.getDate().after(end))
-                    .mapToDouble(TransactionModel::getValue)
-                    .sum();
-
-            double totalBalance = totalIncome - totalExpenses;
-
-            totalBalanceLabel.setText(LABEL_TOTAL_BALANCE + String.format("$%,.2f", totalBalance));
-            totalIncomeLabel.setText(LABEL_TOTAL_INCOME + String.format("$%,.2f", totalIncome));
-            totalExpensesLabel.setText(LABEL_TOTAL_EXPENSES + String.format("$%,.2f", totalExpenses));
-
-            String incomeCategories = transactionTypes.stream()
-                    .filter(type -> incomeTypeCount.containsKey(type.getId()))
-                    .map(type -> " " + type.getDesc() + ": " + incomeTypeCount.get(type.getId()) + "\n")
-                    .collect(Collectors.joining());
-
-            incomeCategoriesLabel.setText(incomeCategories);
-
-            String expenseCategories = transactionTypes.stream()
-                    .filter(type -> expenseTypeCount.containsKey(type.getId()))
-                    .map(type -> " " + type.getDesc() + ": " + expenseTypeCount.get(type.getId()) + "\n")
-                    .collect(Collectors.joining());
-
-            expensesCategoriesLabel.setText(expenseCategories);
-        } else {
-            JOptionPane.showMessageDialog(null, "Falha ao gerar o relatório");
-        }
-    }
 
     private Date getStartDate(Date parsedDate) {
         Calendar calendar = Calendar.getInstance();

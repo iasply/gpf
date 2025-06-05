@@ -1,8 +1,5 @@
 package br.com.gpf.controller;
 
-import br.com.gpf.controller.impl.*;
-import br.com.gpf.controller.service.TransactionService;
-import br.com.gpf.controller.service.TransactionTypeService;
 import br.com.gpf.model.dao.TransactionDao;
 import br.com.gpf.model.dao.TransactionTypesDao;
 import br.com.gpf.model.dao.UserDao;
@@ -15,8 +12,6 @@ import org.hibernate.cfg.Configuration;
 public class ServiceLocator {
 
     private static ServiceLocator instance = null;
-    private TransactionTypeService transactionTypeService;
-    private TransactionService transactionService;
     private Session session;
     private UserDao userDao;
     private TransactionTypesDao transactionTypesDao;
@@ -61,13 +56,7 @@ public class ServiceLocator {
         this.session = session;
     }
 
-    public TransactionTypeService getTransactionTypeService() {
-        return transactionTypeService;
-    }
 
-    public TransactionService getTransactionService() {
-        return transactionService;
-    }
 
     public UserDao getUserDao() {
         return userDao;
